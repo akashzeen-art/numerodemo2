@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import ServiceSlider from '../components/ServiceSlider'
 import useScrollReveal from '../hooks/useScrollReveal'
 import '../styles/global.css'
 import '../styles/home.css'
@@ -227,6 +228,20 @@ export default function Home() {
                 </div>
               </TiltCard>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Slider */}
+      <section className="section" style={{ background: 'var(--dark2)' }}>
+        <div className="container">
+          <div className="section-heading reveal">
+            <div className="tag">Featured Services</div>
+            <h2>What We <span className="gradient-text">Deliver</span></h2>
+            <p>Swipe through our core technology solutions</p>
+          </div>
+          <div className="reveal">
+            <ServiceSlider />
           </div>
         </div>
       </section>
