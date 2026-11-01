@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import ServiceSlider from '../components/ServiceSlider'
 import useScrollReveal from '../hooks/useScrollReveal'
 import '../styles/global.css'
 import '../styles/footer.css'
@@ -86,20 +85,6 @@ export default function Services() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Slider Section */}
-      <section className="section" style={{ background: 'var(--dark2)' }}>
-        <div className="container">
-          <div className="section-heading reveal">
-            <div className="tag">Interactive Preview</div>
-            <h2>Explore Our <span className="gradient-text">Solutions</span></h2>
-            <p>Swipe through our core service offerings</p>
-          </div>
-          <div className="reveal">
-            <ServiceSlider />
           </div>
         </div>
       </section>
