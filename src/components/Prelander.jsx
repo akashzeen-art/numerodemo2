@@ -12,11 +12,14 @@ const RIGHT_BUBBLES = [
 ]
 
 const USSD_ITEMS = [
-  { num: 1, accent: '#4f46e5', label: 'VAS Platforms',        icon: '📡' },
-  { num: 2, accent: '#7c3aed', label: 'Carrier Billing',      icon: '📱' },
-  { num: 3, accent: '#9333ea', label: 'Content & Marketing',  icon: '📣' },
-  { num: 4, accent: '#c026d3', label: 'Cross-Border Payments', icon: '💱' },
+  { num: 1, accent: '#4f46e5', label: 'VAS Platforms',         sub: 'USSD · SMSC · IVR · CRBT', icon: '📡' },
+  { num: 2, accent: '#7c3aed', label: 'Carrier Billing',       sub: 'Pay with your mobile',     icon: '📱' },
+  { num: 3, accent: '#9333ea', label: 'Content & Marketing',   sub: 'Games · VOD · Campaigns',  icon: '📣' },
+  { num: 4, accent: '#c026d3', label: 'Cross-Border Payments', sub: '50+ currencies',           icon: '💱' },
 ]
+
+const STATUS = ['Dialling into the Numero network', 'Opening the solutions menu', 'Loading content & campaigns', 'All solutions ready']
+const DIAL_CODE = '*123#'
 
 const TICKER = [
   { label: 'USSD',                  accent: '#4f46e5' },
@@ -73,7 +76,6 @@ function Particles() {
 
 export default function Prelander({ onDone }) {
   const [progress, setProgress] = useState(0)
-  const [activeUssd, setActiveUssd] = useState(0)
   const [done, setDone] = useState(false)
   const [hidden, setHidden] = useState(false)
 
@@ -93,15 +95,13 @@ export default function Prelander({ onDone }) {
     return () => clearInterval(iv)
   }, [skip])
 
-  useEffect(() => {
-    const iv = setInterval(() => setActiveUssd(a => (a + 1) % USSD_ITEMS.length), 1000)
-    return () => clearInterval(iv)
-  }, [])
-
   if (hidden) return null
 
   const pct = Math.min(Math.round(progress), 100)
   const statusIdx = Math.min(Math.floor(progress / 25), 3)
+  const activeUssd = statusIdx
+  const ready = pct >= 100
+  const dialed = DIAL_CODE.slice(0, Math.min(DIAL_CODE.length, Math.ceil(progress / 4)))
   const allTicker = [...TICKER, ...TICKER]
 
   return (
@@ -141,6 +141,9 @@ export default function Prelander({ onDone }) {
         <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.18em', textTransform: 'uppercase', fontFamily: 'Space Grotesk', fontWeight: 600 }}>
           VAS · Carrier Billing · Forex
         </p>
+        <p style={{ marginTop: 6, fontSize: 'clamp(1.2rem,2.4vw,1.7rem)', fontWeight: 800, fontFamily: 'Space Grotesk', background: 'linear-gradient(135deg,#a78bfa,#06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          Connect, engage & grow.
+        </p>
       </div>
 
       {/* Stage */}
@@ -177,25 +180,42 @@ export default function Prelander({ onDone }) {
                     ))}
                   </div>
                 </div>
+                {/* Dial bar */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '7px 10px', marginBottom: 10, borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Dial</span>
+                  <span style={{ fontFamily: 'Space Grotesk', fontSize: 15, fontWeight: 800, letterSpacing: '0.12em', color: '#fff' }}>
+                    {dialed}<span style={{ display: 'inline-block', width: 1.5, height: 13, marginLeft: 2, background: '#a78bfa', verticalAlign: 'middle', animation: 'caretPL 1s step-end infinite' }} />
+                  </span>
+                  <span style={{ fontSize: 9, color: '#34d399', fontWeight: 700 }}>No data</span>
+                </div>
                 {/* Title */}
-                <p style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.4)', marginBottom: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Numero Info Services</p>
+                <p style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.4)', marginBottom: 10, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Numero Info Services</p>
                 {/* Menu items */}
                 <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
                   {USSD_ITEMS.map((item, i) => (
                     <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 10, background: i === activeUssd ? `${item.accent}22` : 'rgba(255,255,255,0.03)', border: `1px solid ${i === activeUssd ? item.accent + '50' : 'rgba(255,255,255,0.05)'}`, transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)', boxShadow: i === activeUssd ? `0 0 16px ${item.accent}25` : 'none' }}>
                       <span style={{ width: 18, height: 18, borderRadius: 5, background: i === activeUssd ? item.accent : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 800, color: '#fff', flexShrink: 0, transition: 'all 0.4s' }}>{item.num}</span>
                       <span style={{ fontSize: 13, marginRight: 2 }}>{item.icon}</span>
-                      <span style={{ fontSize: 10, fontWeight: 600, color: i === activeUssd ? '#fff' : 'rgba(255,255,255,0.4)', flex: 1, lineHeight: 1.2, transition: 'color 0.4s' }}>{item.label}</span>
-                      {i < activeUssd && <span style={{ fontSize: 10, color: item.accent }}>✓</span>}
+                      <span style={{ flex: 1, minWidth: 0 }}>
+                        <span style={{ display: 'block', fontSize: 10, fontWeight: 600, color: i <= activeUssd ? '#fff' : 'rgba(255,255,255,0.4)', lineHeight: 1.2, transition: 'color 0.4s' }}>{item.label}</span>
+                        <span style={{ display: 'block', fontSize: 8, color: 'rgba(255,255,255,0.35)', lineHeight: 1.3, marginTop: 1, maxHeight: i === activeUssd ? 12 : 0, opacity: i === activeUssd ? 1 : 0, overflow: 'hidden', transition: 'all 0.4s' }}>{item.sub}</span>
+                      </span>
+                      {(i < activeUssd || ready) && <span style={{ fontSize: 10, color: item.accent }}>✓</span>}
                     </li>
                   ))}
                 </ol>
                 {/* Connecting */}
                 <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                  {[0, 1, 2].map(i => (
-                    <div key={i} style={{ width: 5, height: 5, borderRadius: '50%', background: '#a78bfa', animation: 'dotBounce 1.2s ease-in-out infinite', animationDelay: `${i * 0.2}s` }} />
-                  ))}
-                  <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', marginLeft: 4 }}>Connecting…</span>
+                  {ready ? (
+                    <span style={{ fontSize: 9, fontWeight: 700, color: '#34d399' }}>✓ Connected</span>
+                  ) : (
+                    <>
+                      {[0, 1, 2].map(i => (
+                        <div key={i} style={{ width: 5, height: 5, borderRadius: '50%', background: '#a78bfa', animation: 'dotBounce 1.2s ease-in-out infinite', animationDelay: `${i * 0.2}s` }} />
+                      ))}
+                      <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', marginLeft: 4 }}>Connecting…</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -231,7 +251,7 @@ export default function Prelander({ onDone }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 20px', marginBottom: 6 }}>
           <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Space Grotesk' }}>
             <em style={{ fontStyle: 'normal', fontWeight: 700, color: '#a78bfa' }}>0{statusIdx + 1} / 04</em>
-            <span style={{ color: 'rgba(255,255,255,0.5)' }}>{USSD_ITEMS[statusIdx]?.label}</span>
+            <span style={{ color: 'rgba(255,255,255,0.5)' }}>{STATUS[statusIdx]}{ready ? '' : '…'}</span>
           </span>
           <span style={{ fontFamily: 'Space Grotesk', fontSize: 12, fontWeight: 800, color: '#a78bfa', letterSpacing: '0.05em' }}>{pct}%</span>
         </div>
@@ -247,6 +267,7 @@ export default function Prelander({ onDone }) {
       <style>{`
         @keyframes blobPL{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.97)}}
         @keyframes pulseGlowPL{0%,100%{opacity:0.5}50%{opacity:1}}
+        @keyframes caretPL{0%,100%{opacity:1}50%{opacity:0}}
         @keyframes dotBounce{0%,80%,100%{transform:scale(0.6);opacity:0.4}40%{transform:scale(1);opacity:1}}
         @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
         @keyframes shimmerPL{0%{background-position:200% 0}100%{background-position:-200% 0}}
