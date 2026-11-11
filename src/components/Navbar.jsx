@@ -4,9 +4,9 @@ import '../styles/navbar.css'
 
 const navLinks = [
   { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
   { to: '/services', label: 'Services' },
-  { to: '/portfolio', label: 'Portfolio' },
+  { to: '/portfolio', label: 'Products' },
+  { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -27,7 +27,9 @@ export default function Navbar() {
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="container">
         <div className="navbar-inner">
-          <Link to="/" className="navbar-logo">NUMERO<span>.</span>INFO</Link>
+          <Link to="/" className="navbar-logo">
+            <img src="/images/logo.png" alt="Numero Info" style={{ height: 70, width: 'auto', display: 'block' }} />
+          </Link>
 
           <ul className={`nav-links${open ? ' open' : ''}`}>
             {navLinks.map(({ to, label }) => (

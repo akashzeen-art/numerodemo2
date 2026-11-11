@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import useScrollReveal from '../hooks/useScrollReveal'
+import { vasProducts } from '../data/content'
 import '../styles/global.css'
 import '../styles/footer.css'
 
@@ -19,9 +20,9 @@ const partners = [
 ]
 
 const values = [
-  { icon: '🎯', title: 'Mission', desc: 'To accelerate business growth by redefining operations for the fast-paced digital agenda of enterprises.' },
-  { icon: '👁️', title: 'Vision', desc: 'To be the most trusted IT partner for enterprises across Asia, delivering world-class technology solutions.' },
-  { icon: '💎', title: 'Values', desc: 'Innovation, integrity, and excellence in every solution we deliver to our clients.' },
+  { icon: '🎯', title: 'Mission', desc: 'To help operators monetize VAS, let customers pay with their mobile, and move cross-border value securely, with speed, clarity and fewer intermediaries.' },
+  { icon: '👁️', title: 'Vision', desc: 'To reach every subscriber, on any phone and any network — and to connect countries, currencies and stakeholders into one clear process.' },
+  { icon: '💎', title: 'Values', desc: 'Secure by design, transparent at every step, and focused on measurable outcomes for every transaction and campaign.' },
 ]
 
 export default function About() {
@@ -35,7 +36,7 @@ export default function About() {
         <div className="container">
           <div className="tag">Who We Are</div>
           <h1>About <span className="gradient-text">Numero Info</span></h1>
-          <p>Innovation leader in providing robust and intelligent IT solutions & services</p>
+          <p>Telecom VAS, Direct Carrier Billing and cross-border payments — connecting people, payments and processes</p>
           <div className="page-hero-line" />
         </div>
       </div>
@@ -47,19 +48,19 @@ export default function About() {
             <div className="reveal-left">
               <div className="tag">Our Story</div>
               <h2 style={{ fontSize: 'clamp(1.8rem,3vw,2.5rem)', fontWeight: 800, color: 'var(--white)', marginBottom: 24 }}>
-                Driving Digital <span className="gradient-text">Transformation</span>
+                Connect, Engage <span className="gradient-text">& Grow</span>
               </h2>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.9, marginBottom: 16 }}>
-                Numero Mobile is the innovation leader in providing most robust and intelligent mobility solutions & services to its customers.
+                Numero Info helps operators monetize VAS with USSD, SMSC, Cloud IVR, CRBT and mobile advertising — the network capabilities, value-added services and campaigns operators and enterprises need, in one place.
               </p>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.9, marginBottom: 16 }}>
-                We help enterprises grow their business and create value for their end customers, enabling them to meaningfully connect through target messaging across all channels and devices.
+                With Direct Carrier Billing, customers buy instantly using their phone bill or prepaid balance. We pair it with content they love — audio books, VOD, HD games, contests and more — and 360º digital marketing that drives conversions.
               </p>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.9, marginBottom: 32 }}>
-                From the largest enterprises to one-person businesses, our customers trust our on-time delivery and world-class innovative products.
+                Across borders, we bring stakeholders, currencies, documentation and approvals into one technology-enabled coordination layer — with deep liquidity across African markets and beyond.
               </p>
               <div style={{ display: 'flex', gap: 32 }}>
-                {[['500+','Projects'],['200+','Clients'],['15+','Years']].map(([n,l]) => (
+                {[[`${vasProducts.length}`,'VAS Products'],['50+','Currencies'],['24–48 H','Turnaround']].map(([n,l]) => (
                   <div key={l}>
                     <div style={{ fontSize: 28, fontWeight: 800, background: 'var(--gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{n}</div>
                     <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{l}</div>

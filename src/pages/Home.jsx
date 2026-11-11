@@ -2,36 +2,28 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import FlipCards from '../components/FlipCards'
+import JourneySection from '../components/JourneySection'
 import useScrollReveal from '../hooks/useScrollReveal'
+import { pillars, forex, marqueeItems, vasProducts, dcb } from '../data/content'
 import '../styles/global.css'
 import '../styles/home.css'
 
-const services = [
-  { icon: 'server.png', title: 'IT Infrastructure', desc: 'Data Center consultation, implementation and Network upgradation for enterprises.', color: '#7c3aed' },
-  { icon: 'cloud.png', title: 'Cloud Managed Services', desc: 'AWS, Azure & GCP optimization, cyber-secure backup and managed cloud.', color: '#06b6d4' },
-  { icon: 'robot.png', title: 'RPA & Automation', desc: 'Robotic Process Automation for OCR, IDP and Contract Lifecycle Management.', color: '#f59e0b' },
-  { icon: 'graph.png', title: 'Data Analytics', desc: 'Business Intelligence, predictive analytics and hands-on training support.', color: '#10b981' },
-  { icon: 'user-check-icon.png', title: 'E-Verification & KYC', desc: 'Digital E-Verification, E-KYC and identity management solutions.', color: '#ef4444' },
-  { icon: 'server.png', title: 'SAP Consulting', desc: 'SAP infrastructure consultation, implementation and management services.', color: '#8b5cf6' },
-]
-
 const stats = [
-  { number: '500+', label: 'Projects Delivered' },
-  { number: '200+', label: 'Happy Clients' },
-  { number: '15+', label: 'Years Experience' },
-  { number: '50+', label: 'Expert Team' },
+  { number: '3', label: 'Business Lines' },
+  { number: `${vasProducts.length}`, label: 'VAS Products' },
+  { number: `${dcb.content.length}`, label: 'Content Categories' },
+  { number: '50+', label: 'Currencies' },
 ]
 
 const whyUs = [
-  { icon: '🚀', title: 'Fast Delivery', desc: 'On-time project delivery with agile methodology.' },
-  { icon: '🔒', title: 'Secure Solutions', desc: 'Enterprise-grade security in every solution.' },
-  { icon: '☁️', title: 'Cloud Native', desc: 'AWS, Azure & GCP certified cloud experts.' },
-  { icon: '🤝', title: '24/7 Support', desc: 'Round-the-clock managed support for all clients.' },
-  { icon: '📊', title: 'Data Driven', desc: 'Analytics-first approach to business decisions.' },
-  { icon: '🏆', title: 'ISO Certified', desc: 'ISO certified processes ensuring quality standards.' },
+  { icon: '📡', title: 'Carrier-Grade VAS',    desc: 'USSD, SMSC, Cloud IVR, CRBT and messaging on one carrier-grade platform.' },
+  { icon: '📱', title: 'Mobile-First Payments', desc: 'Checkout built for the phone, paid with just a mobile number.' },
+  { icon: '🌍', title: 'Global Content',        desc: 'Games, VOD, audio books and more, regularly refreshed for a global audience.' },
+  { icon: '📊', title: 'Measurable Outcomes',   desc: 'Track every transaction and campaign with clear, measurable results.' },
+  { icon: '💱', title: 'Deep Liquidity',        desc: '50+ currencies across major, exotic and illiquid markets.' },
+  { icon: '🛡️', title: 'Compliance & Control',  desc: 'Secure information, clear accountability and regulation-ready workflows.' },
 ]
-
-const marqueeItems = ['IT Infrastructure', 'Cloud Services', 'RPA Automation', 'Data Analytics', 'E-KYC Solutions', 'SAP Consulting', 'Digital Marketing', 'VAS Solutions', 'Network Security', 'DevOps']
 
 // 3D Tilt Card
 function TiltCard({ children, className, style }) {
@@ -141,43 +133,131 @@ export default function Home() {
       <Navbar />
 
       {/* Hero */}
-      <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-grid" />
-        <div className="hero-orb hero-orb-1" />
-        <div className="hero-orb hero-orb-2" />
-        <div className="hero-orb hero-orb-3" />
-        <div className="hero-blob" />
-        <Particles />
+      <section style={{ position:'relative', display:'flex', minHeight:'100svh', flexDirection:'column', justifyContent:'center', overflow:'hidden', paddingTop:112, paddingBottom:176, color:'#fff' }}>
 
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-          <div className="grid-2">
-            <div className="hero-content">
-              <div className="tag">⚡ <Typewriter words={['IT Services', 'Cloud Solutions', 'Digital Marketing', 'VAS Solutions', 'RPA Automation']} /></div>
-              <h1 className="hero-title">
-                <div className="line"><span>Transform Your</span></div>
-                <div className="line"><span><span className="gradient-text">Business With</span></span></div>
-                <div className="line"><span>Smart Technology</span></div>
-              </h1>
-              <p className="hero-subtitle">
-                Numero Info IT Services delivers cutting-edge cloud, infrastructure, RPA, and digital solutions to enterprises across India and beyond.
-              </p>
-              <div className="hero-btns">
-                <Link to="/services" className="btn-primary"><span>Explore Services</span> <span>→</span></Link>
-                <Link to="/contact" className="btn-outline">Talk to Us</Link>
-              </div>
-            </div>
-
-            <div className="hero-visual">
-              <div className="hero-img-wrap">
-                <img src="/images/slider-img.png" alt="hero" style={{ width: '100%' }} />
-              </div>
-              <div className="hero-badge b1">⚡ 99.9% Uptime SLA</div>
-              <div className="hero-badge b2">☁️ Cloud Ready</div>
-              <div className="hero-badge b3">🔒 ISO Certified</div>
-            </div>
+        {/* ── Background ── */}
+        <div style={{ position:'absolute', inset:0, zIndex:0 }}>
+          {/* Video bg */}
+          <div style={{ position:'absolute', inset:0, willChange:'transform', transform:'scale(1.08)' }}>
+            <video style={{ width:'100%', height:'100%', objectFit:'cover' }}
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=75"
+              autoPlay loop playsInline muted preload="metadata" />
           </div>
+          {/* Overlays */}
+          <div style={{ position:'absolute', inset:0, background:'linear-gradient(135deg,rgba(6,4,18,0.96) 0%,rgba(124,58,237,0.82) 50%,rgba(6,4,18,0.96) 100%)' }} />
+          <div style={{ position:'absolute', inset:0, background:'radial-gradient(45% 55% at 78% 38%,rgba(6,182,212,0.28),transparent 70%),radial-gradient(40% 45% at 12% 85%,rgba(124,58,237,0.55),transparent 70%)' }} />
+          <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)', backgroundSize:'64px 64px', opacity:0.6 }} />
+          {/* Blobs */}
+          <div style={{ position:'absolute', top:'-6rem', right:'-10%', width:'34rem', height:'34rem', borderRadius:'50%', background:'rgba(6,182,212,0.18)', filter:'blur(80px)', animation:'blobH 9s ease-in-out infinite', pointerEvents:'none' }} />
+          <div style={{ position:'absolute', bottom:'-10%', left:'-8rem', width:'24rem', height:'24rem', borderRadius:'50%', background:'rgba(245,158,11,0.12)', filter:'blur(80px)', animation:'blobH 9s ease-in-out infinite', animationDelay:'4s', pointerEvents:'none' }} />
+          {/* ECG line */}
+          <svg viewBox="0 0 1400 120" preserveAspectRatio="none" style={{ position:'absolute', bottom:96, left:0, right:0, width:'100%', height:80, opacity:0.7 }} aria-hidden="true">
+            <path d="M0 60 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42"
+              fill="none" stroke="rgba(124,58,237,0.3)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+            <path d="M0 60 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42"
+              pathLength="1" fill="none" stroke="#a78bfa" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke"
+              style={{ strokeDasharray:'0.22 0.78', filter:'drop-shadow(rgba(124,58,237,0.9) 0 0 6px)', animation:'ecgH 3s linear infinite' }} />
+          </svg>
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:128, background:'linear-gradient(to top,var(--dark),transparent)' }} />
         </div>
+
+        {/* ── Floating icons ── */}
+        {[{icon:'💱',top:'20%',right:'3%',delay:'0s',size:56},{icon:'📡',top:'13%',right:'40%',delay:'0.8s',size:44},{icon:'📱',bottom:'36%',right:'33%',delay:'1.6s',size:44},{icon:'🛡️',bottom:'40%',right:'2%',delay:'2.2s',size:48},{icon:'⚡',top:'11%',left:'44%',delay:'1.2s',size:36},{icon:'📊',top:'9%',right:'16%',delay:'2.8s',size:40}].map((f,i)=>(
+          <div key={i} style={{ position:'absolute', top:f.top, bottom:f.bottom, right:f.right, left:f.left, width:f.size, height:f.size, borderRadius:14, background:'rgba(255,255,255,0.07)', backdropFilter:'blur(12px)', border:'1px solid rgba(255,255,255,0.15)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:f.size*0.42, boxShadow:'0 0 28px rgba(124,58,237,0.25)', animation:'float 6s ease-in-out infinite', animationDelay:f.delay, zIndex:1, pointerEvents:'none' }}>{f.icon}</div>
+        ))}
+
+        {/* ── Main content ── */}
+        {/* <div className="container" style={{ position:'relative', zIndex:2, width:'100%' }}> */}
+          <div style={{ display:'grid', gridTemplateColumns:'1.3fr 1fr', gap:48, alignItems:'center' }}>
+
+            {/* Left */}
+            <div>
+              <p style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'6px 16px', borderRadius:50, background:'rgba(255,255,255,0.08)', backdropFilter:'blur(12px)', border:'1px solid rgba(255,255,255,0.15)', fontSize:11, fontWeight:700, letterSpacing:'0.15em', textTransform:'uppercase', color:'var(--neon)', marginBottom:24, animation:'fadeUp 0.6s 0.2s both' }}>
+                <span style={{ position:'relative', display:'flex', width:8, height:8 }}>
+                  <span style={{ position:'absolute', inset:0, borderRadius:'50%', background:'var(--neon)', animation:'ping 1.5s infinite', opacity:0.6 }} />
+                  <span style={{ position:'relative', width:8, height:8, borderRadius:'50%', background:'var(--neon)' }} />
+                </span>
+                VAS · Carrier Billing · Cross-Border Payments
+              </p>
+
+              <h1 style={{ fontSize:'clamp(2.6rem,5vw,4.25rem)', fontWeight:900, lineHeight:1.08, letterSpacing:'-0.02em', marginBottom:24 }}>
+                {['Connect,','Engage'].map((w,i)=>(
+                  <span key={i} style={{ display:'inline-block', overflow:'hidden', paddingBottom:4, marginRight:12, verticalAlign:'bottom' }}>
+                    <span style={{ display:'inline-block', background:'linear-gradient(135deg,#a78bfa 0%,#00fff0 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', animation:`fadeUp 0.7s ${0.3+i*0.1}s both` }}>{w}</span>
+                  </span>
+                ))}
+                <br />
+                {['&','Grow.'].map((w,i)=>(
+                  <span key={i} style={{ display:'inline-block', overflow:'hidden', paddingBottom:4, marginRight:12, verticalAlign:'bottom' }}>
+                    <span style={{ display:'inline-block', color:'#fff', animation:`fadeUp 0.7s ${0.55+i*0.1}s both` }}>{w}</span>
+                  </span>
+                ))}
+              </h1>
+
+              <p style={{ fontSize:18, color:'rgba(255,255,255,0.75)', lineHeight:1.85, maxWidth:520, marginBottom:36, animation:'fadeUp 0.7s 0.9s both' }}>
+                Telecom VAS platforms, Direct Carrier Billing with content and digital marketing, and cross-border payments that connect countries, currencies and stakeholders into one clear process.
+              </p>
+
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap', animation:'fadeUp 0.7s 1.05s both' }}>
+                <Link to="/contact" style={{ display:'inline-flex', alignItems:'center', gap:8, background:'var(--gradient)', color:'#fff', padding:'15px 32px', borderRadius:50, fontWeight:700, fontSize:15, textDecoration:'none', boxShadow:'0 8px 32px rgba(124,58,237,0.55)', transition:'all 0.3s' }}
+                  onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.boxShadow='0 16px 48px rgba(124,58,237,0.75)'}}
+                  onMouseLeave={e=>{e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='0 8px 32px rgba(124,58,237,0.55)'}}>Get Free Quote →</Link>
+                <Link to="/services" style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(255,255,255,0.08)', backdropFilter:'blur(12px)', color:'#fff', padding:'15px 32px', borderRadius:50, fontWeight:700, fontSize:15, textDecoration:'none', border:'1px solid rgba(255,255,255,0.15)', transition:'all 0.3s' }}
+                  onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.15)'}
+                  onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.08)'}>Explore Services</Link>
+              </div>
+            </div>
+
+            {/* Right — orbit visual */}
+            <div style={{ position:'relative', height:'30rem', display:'flex', alignItems:'center', justifyContent:'center' }}>
+              {/* Pulse glow */}
+              <span style={{ position:'absolute', inset:'10%', borderRadius:'50%', background:'rgba(6,182,212,0.1)', filter:'blur(20px)', animation:'pulseGlow 4s ease-in-out infinite' }} />
+              {/* Outer dashed ring */}
+              <svg viewBox="0 0 100 100" style={{ position:'absolute', inset:'-6%', width:'112%', height:'112%', animation:'spin-slow 40s linear infinite', color:'rgba(124,58,237,0.4)' }} aria-hidden="true">
+                <circle cx="50" cy="50" r="49" fill="none" stroke="currentColor" strokeWidth="0.4" strokeDasharray="2 3" />
+              </svg>
+              {/* Inner ring */}
+              <svg viewBox="0 0 100 100" style={{ position:'absolute', inset:'-12%', width:'124%', height:'124%', animation:'spin-slow 60s linear infinite reverse', color:'rgba(255,255,255,0.12)' }} aria-hidden="true">
+                <circle cx="50" cy="50" r="49" fill="none" stroke="currentColor" strokeWidth="0.25" />
+                <circle cx="50" cy="1" r="1.3" fill="#a78bfa" />
+                <circle cx="1" cy="50" r="0.9" fill="#fff" />
+              </svg>
+              {/* Orbiting spark */}
+              <div style={{ position:'absolute', inset:'-6%', width:'112%', height:'112%', animation:'spin-slow 8s linear infinite' }}>
+                <span style={{ position:'absolute', top:'50%', right:'-1rem', transform:'translateY(-50%)', width:36, height:36, borderRadius:'50%', background:'var(--gradient)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, boxShadow:'0 0 22px rgba(124,58,237,0.9)' }}>⚡</span>
+              </div>
+              {/* Center circle image */}
+              <div style={{ position:'relative', width:'70%', height:'70%', borderRadius:'50%', overflow:'hidden', border:'4px solid rgba(255,255,255,0.12)', boxShadow:'0 0 80px rgba(6,182,212,0.3)' }}>
+                <img src="/images/slider-img.png" alt="hero" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+                <span style={{ position:'absolute', inset:0, background:'linear-gradient(135deg,rgba(124,58,237,0.3),transparent 50%,rgba(6,182,212,0.15))' }} />
+              </div>
+              {/* Floating service badges */}
+              {[
+                { label:'Telecom VAS', icon:'📡', top:'4%', right:'2%', delay:'0s' },
+                { label:'Carrier Billing', icon:'📱', top:'42%', left:'-6%', delay:'0.9s' },
+                { label:'50+ Currencies', icon:'💱', bottom:'6%', right:'6%', delay:'1.8s' },
+              ].map((b,i)=>(
+                <div key={i} style={{ position:'absolute', top:b.top, bottom:b.bottom, right:b.right, left:b.left, animation:'float 6s ease-in-out infinite', animationDelay:b.delay, zIndex:2 }}>
+                  <div style={{ display:'inline-flex', alignItems:'center', gap:10, background:'rgba(0,0,0,0.65)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.12)', padding:'10px 16px 10px 10px', borderRadius:16, whiteSpace:'nowrap', boxShadow:'0 8px 32px rgba(0,0,0,0.3)' }}>
+                    <span style={{ position:'relative', width:36, height:36, borderRadius:10, background:'var(--gradient)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16 }}>
+                      <span style={{ position:'absolute', inset:0, borderRadius:10, background:'var(--gradient)', animation:'ping 2.8s infinite', opacity:0.4 }} />
+                      {b.icon}
+                    </span>
+                    <span style={{ fontSize:13, fontWeight:700, color:'#fff', fontFamily:'Space Grotesk' }}>{b.label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+        </div>
+
+        <style>{`
+          @keyframes blobH{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(20px,-20px) scale(1.04)}66%{transform:translate(-10px,10px) scale(0.97)}}
+          @keyframes ecgH{from{stroke-dashoffset:1}to{stroke-dashoffset:-1}}
+          @keyframes ping{0%{transform:scale(1);opacity:0.6}100%{transform:scale(2);opacity:0}}
+          @keyframes pulseGlow{0%,100%{opacity:0.4}50%{opacity:0.8}}
+          @media(max-width:900px){.hero-grid-inner{grid-template-columns:1fr!important}}
+        `}</style>
       </section>
 
       {/* Marquee */}
@@ -212,22 +292,34 @@ export default function Home() {
           <div className="section-heading reveal">
             <div className="tag">What We Do</div>
             <h2>Our <span className="gradient-text">Core Services</span></h2>
-            <p>Comprehensive IT solutions tailored for modern enterprises</p>
+            <p>Telecom VAS, Direct Carrier Billing and cross-border payments</p>
           </div>
           <div className="services-grid">
-            {services.map((s, i) => (
-              <TiltCard key={i} className="service-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+            {pillars.map((s, i) => (
+              <TiltCard key={s.id} className="service-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
                 <div className="service-card-inner">
                   <div className="service-icon" style={{ background: `${s.color}18`, borderColor: `${s.color}30` }}>
                     <img src={`/images/${s.icon}`} alt={s.title} />
                   </div>
                   <h3>{s.title}</h3>
                   <p>{s.desc}</p>
-                  <div className="service-arrow" style={{ color: s.color }}>Learn more →</div>
+                  <Link to={`/services#${s.id}`} className="service-arrow" style={{ color: s.color, textDecoration: 'none' }}>Learn more →</Link>
                 </div>
               </TiltCard>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Flip Cards */}
+      <section className="section" style={{ background: 'var(--dark2)' }}>
+        <div className="container">
+          <div className="section-heading reveal">
+            <div className="tag">VAS Solution Families</div>
+            <h2>Reach Every Subscriber, <span className="gradient-text">On Any Phone</span></h2>
+            <p>USSD, messaging, voice, ringback tones and mobile advertising working together on one carrier-grade platform — hover each card to explore</p>
+          </div>
+          <FlipCards />
         </div>
       </section>
 
@@ -238,10 +330,10 @@ export default function Home() {
             <div className="reveal-left">
               <div className="tag">Why Choose Us</div>
               <h2 style={{ fontSize: 'clamp(1.8rem,3vw,2.8rem)', fontWeight: 800, color: 'var(--white)', marginBottom: 16 }}>
-                Built for <span className="gradient-text">Enterprise Scale</span>
+                One Partner, <span className="gradient-text">Every Channel</span>
               </h2>
               <p style={{ color: 'var(--text-muted)', marginBottom: 40, lineHeight: 1.85, fontSize: 16 }}>
-                From startups to Fortune 500 companies, we deliver technology solutions that drive real business outcomes with certified experts.
+                From operators and third-party VAS providers to enterprises and financial institutions, we deliver telecom solutions, carrier billing with content and digital marketing, and cross-border payments that move value securely, with speed, clarity and fewer intermediaries.
               </p>
               <Link to="/about" className="btn-primary"><span>Learn More About Us</span> <span>→</span></Link>
             </div>
@@ -260,26 +352,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Preview */}
+      {/* Journey Section */}
+      <JourneySection />
+
+      {/* Forex highlight */}
       <section className="section">
         <div className="container">
           <div className="section-heading reveal">
-            <div className="tag">Our Work</div>
-            <h2>Recent <span className="gradient-text">Portfolio</span></h2>
-            <p>A glimpse of our successful project deliveries</p>
+            <div className="tag">Forex & Cross-Border Payments</div>
+            <h2>Liquidity <span className="gradient-text">Across the World</span></h2>
+            <p>{forex.layers[1].solution}</p>
           </div>
-          <div className="portfolio-grid">
-            {['portfolio2.jpg','portfolio5.jpg','portfolio8.jpg','portfolio3.jpg','portfolio6.jpg','portfolio9.jpg'].map((img, i) => (
-              <div key={i} className="portfolio-item reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-                <img src={`/images/${img}`} alt={`portfolio ${i+1}`} />
-                <div className="portfolio-overlay">
-                  <span>View Project →</span>
-                </div>
+          <div className="grid-3">
+            {forex.stats.map((s, i) => (
+              <div key={s.label} className="glass-card reveal" style={{ padding: 32, textAlign: 'center', transitionDelay: `${i * 0.1}s` }}>
+                <div style={{ fontSize: 40, fontWeight: 900, background: 'var(--gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontFamily: 'Space Grotesk', marginBottom: 6 }}>{s.value}</div>
+                <h3 style={{ color: 'var(--white)', fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{s.label}</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
+          <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginTop: 40 }}>
+            {forex.corridors.map(c => (
+              <span key={c} style={{ padding: '7px 16px', borderRadius: 50, background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)', fontSize: 13, fontWeight: 600, color: '#67e8f9' }}>{c}</span>
+            ))}
+          </div>
           <div style={{ textAlign: 'center', marginTop: 48 }}>
-            <Link to="/portfolio" className="btn-outline">View All Projects →</Link>
+            <Link to="/services#forex" className="btn-outline">Explore Cross-Border Payments →</Link>
           </div>
         </div>
       </section>
@@ -288,8 +387,8 @@ export default function Home() {
       <section className="section-sm">
         <div className="container">
           <div className="cta-section reveal">
-            <h2>Ready to <span className="gradient-text-neon">Transform</span> Your Business?</h2>
-            <p>Let's discuss how we can help you achieve your technology goals.</p>
+            <h2>Ready to <span className="gradient-text-neon">Grow</span> Your Business?</h2>
+            <p>Let’s talk about launching VAS, DCB, content, digital campaigns and cross-border payments that grow with your business.</p>
             <div className="cta-btns">
               <Link to="/contact" className="btn-primary"><span>Contact Us Now</span> <span>→</span></Link>
               <Link to="/services" className="btn-outline">View Services</Link>

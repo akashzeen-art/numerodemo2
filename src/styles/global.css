@@ -149,6 +149,9 @@ img { max-width: 100%; display: block; }
 .reveal-scale { opacity: 0; transform: scale(0.8) rotate(-3deg); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
 .reveal-scale.visible { opacity: 1; transform: scale(1) rotate(0deg); }
 
+/* Ensure portfolio images always show even if reveal fails */
+.portfolio-item img { opacity: 1 !important; }
+
 /* Grid */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
