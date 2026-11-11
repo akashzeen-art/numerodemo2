@@ -317,7 +317,7 @@ export default function Home() {
           <div className="section-heading reveal">
             <div className="tag">VAS Solution Families</div>
             <h2>Reach Every Subscriber, <span className="gradient-text">On Any Phone</span></h2>
-            <p>USSD, messaging, voice, ringback tones and mobile advertising working together on one carrier-grade platform — hover each card to explore</p>
+            <p>USSD, messaging, voice, ringback tones and mobile advertising working together on one carrier-grade platform.</p>
           </div>
           <FlipCards />
         </div>
