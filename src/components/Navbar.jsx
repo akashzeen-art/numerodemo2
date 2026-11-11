@@ -23,12 +23,17 @@ export default function Navbar() {
 
   useEffect(() => { setOpen(false) }, [pathname])
 
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="container">
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">
-            <img src="/images/logo.png" alt="Numero Info" style={{ height: 70, width: 'auto', display: 'block' }} />
+            <img src="/images/logo.png" alt="Numero Info" />
           </Link>
 
           <ul className={`nav-links${open ? ' open' : ''}`}>

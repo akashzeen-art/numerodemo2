@@ -37,7 +37,7 @@ export default function ServicesHero() {
       </div>
 
       <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div className="services-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
 
           {/* Left */}
           <div>
@@ -136,8 +136,12 @@ export default function ServicesHero() {
 
       <style>{`
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.5)} }
-        @media(max-width:768px){
-          .services-hero-grid { grid-template-columns: 1fr !important; }
+        @media(max-width:900px){
+          .services-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          section[style] { padding-top: 120px !important; padding-bottom: 64px !important; min-height: auto !important; }
+        }
+        @media(max-width:576px){
+          .services-hero-grid > div:last-child { max-width: 280px; margin: 0 auto; }
         }
       `}</style>
     </section>

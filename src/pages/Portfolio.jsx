@@ -62,7 +62,7 @@ function Hero() {
       </div>
 
       <div className="container" style={{ position:'relative', zIndex:1, width:'100%' }}>
-        <div style={{ display:'grid', gridTemplateColumns:'1.2fr 1fr', gap:72, alignItems:'center' }}>
+        <div className="port-hero-grid" style={{ display:'grid', gridTemplateColumns:'1.2fr 1fr', gap:72, alignItems:'center' }}>
           {/* Left */}
           <div>
             <p style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'5px 14px', borderRadius:50, background:'rgba(124,58,237,0.15)', border:'1px solid rgba(124,58,237,0.3)', fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--primary-light)', marginBottom:24 }}>
@@ -162,7 +162,12 @@ function Hero() {
         @keyframes ecgP{from{stroke-dashoffset:1}to{stroke-dashoffset:-1}}
         @keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.5)}}
         @keyframes marqueeP{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-        @media(max-width:900px){.port-hero-grid{grid-template-columns:1fr!important}}
+        @media(max-width:900px){
+          .port-hero-grid{grid-template-columns:1fr!important;gap:40px!important}
+        }
+        @media(max-width:576px){
+          section{padding-top:120px!important;padding-bottom:64px!important;min-height:auto!important}
+        }
       `}</style>
     </section>
   )
@@ -183,9 +188,9 @@ function IncludedSection() {
           <p>Offers enablement, core VAS, VAS & digital and mobile advertisement — every product on one carrier-grade platform.</p>
         </div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1.05fr', gap:40, alignItems:'center' }}>
+        <div className="port-included-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1.05fr', gap:40, alignItems:'center' }}>
           {/* Left — product buttons */}
-          <div>
+          <div style={{ minWidth:0 }}>
             <p style={{ fontSize:13, color:'var(--text-muted)', marginBottom:16, display:'flex', alignItems:'center', gap:8 }}>
               <span>👆</span> Choose a product to see what it does
             </p>
@@ -237,6 +242,12 @@ function IncludedSection() {
           </div>
         </div>
       </div>
+      <style>{`
+        @media(max-width:900px){
+          .port-included-grid{grid-template-columns:1fr!important;gap:28px!important}
+          .port-included-grid ul{grid-template-columns:1fr!important}
+        }
+      `}</style>
     </section>
   )
 }
@@ -258,7 +269,7 @@ function ExtrasSection() {
             🔄 Repositories refreshed regularly with trending, high-quality content
           </span>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20 }}>
+        <div className="port-extras-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20 }}>
           {dcb.content.map(c => ({ icon: c.emoji, title: c.title, desc: c.desc })).map((e,i) => (
             <article key={i} className="reveal" style={{ transitionDelay:`${i*0.08}s`, position:'relative', display:'flex', flexDirection:'column', padding:24, borderRadius:24, border:'1px dashed rgba(255,255,255,0.15)', background:'rgba(255,255,255,0.04)', backdropFilter:'blur(12px)', transition:'all 0.3s', cursor:'default', overflow:'hidden' }}
               onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(0,255,240,0.4)';e.currentTarget.style.background='rgba(255,255,255,0.08)';e.currentTarget.style.transform='translateY(-4px)'}}
@@ -288,7 +299,7 @@ function DomainsSection() {
           <h2>Four Connected <span className="gradient-text">Platform Layers</span></h2>
           <p>From repatriation coordination to currency liquidity, compliance and the full payment journey — hover each card to explore.</p>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:24 }}>
+        <div className="port-domains-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:24 }}>
           {domains.map((d,i) => (
             <div key={i} className="reveal" style={{ transitionDelay:`${i*0.1}s`, height:280, perspective:1000, cursor:'pointer' }}
               onMouseEnter={()=>setFlipped(i)} onMouseLeave={()=>setFlipped(null)}

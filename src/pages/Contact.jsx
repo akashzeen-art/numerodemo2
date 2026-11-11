@@ -107,7 +107,7 @@ export default function Contact() {
 
       {/* ── Enquiry Form + Sidebar ── */}
       <section style={{ padding:'80px 0', background:'var(--dark)' }} ref={formRef} id="enquiry">
-        <div className="container" style={{ display:'grid', gridTemplateColumns:'1fr 22rem', gap:40, alignItems:'start' }}>
+        <div className="container contact-enquiry-grid" style={{ display:'grid', gridTemplateColumns:'1fr 22rem', gap:40, alignItems:'start' }}>
 
           {/* Left — form */}
           <div>
@@ -133,7 +133,7 @@ export default function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:20 }}>
-                    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+                    <div className="contact-form-fields" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
                       {[
                         { key:'name', label:'Full Name *', type:'text', placeholder:'John Doe', required:true },
                         { key:'email', label:'Email Address *', type:'email', placeholder:'john@company.com', required:true },
@@ -236,7 +236,7 @@ export default function Contact() {
           </div>
 
           {/* Contact cards */}
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20, marginBottom:20 }}>
+          <div className="contact-cards-grid" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20, marginBottom:20 }}>
             {contactCards.map((c,i) => (
               <a key={i} href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
                 className="reveal" style={{ transitionDelay:`${i*0.1}s`, display:'flex', flexDirection:'column', gap:16, padding:28, borderRadius:24, background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)', textDecoration:'none', transition:'all 0.3s' }}
@@ -252,7 +252,7 @@ export default function Contact() {
           </div>
 
           {/* Address + Hours + Map */}
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20, marginBottom:20 }}>
+          <div className="contact-office-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20, marginBottom:20 }}>
             <div className="reveal" style={{ display:'flex', flexDirection:'column', gap:16, padding:28, borderRadius:24, background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)' }}>
               <span style={{ width:56, height:56, borderRadius:16, background:'var(--gradient)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:24, boxShadow:'0 8px 20px rgba(124,58,237,0.4)' }}>📍</span>
               <div>
@@ -302,7 +302,17 @@ export default function Contact() {
           </div>
         </div>
 
-        <style>{`@keyframes ping{0%{transform:scale(1);opacity:0.6}100%{transform:scale(2.2);opacity:0}}`}</style>
+        <style>{`
+          @keyframes ping{0%{transform:scale(1);opacity:0.6}100%{transform:scale(2.2);opacity:0}}
+          @media(max-width:900px){
+            .contact-enquiry-grid{grid-template-columns:1fr!important}
+            .contact-enquiry-grid aside{position:static!important}
+            .contact-cards-grid,.contact-office-grid{grid-template-columns:1fr!important}
+          }
+          @media(max-width:640px){
+            .contact-form-fields{grid-template-columns:1fr!important}
+          }
+        `}</style>
       </section>
 
       <Footer />

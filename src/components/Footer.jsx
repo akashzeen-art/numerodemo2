@@ -38,12 +38,12 @@ export default function Footer() {
       </svg>
 
       {/* Main grid */}
-      <div className="container" style={{ position:'relative', zIndex:1, display:'grid', gridTemplateColumns:'1.1fr 0.6fr 1.8fr', gap:56, paddingTop:48, paddingBottom:40 }}>
+      <div className="container footer-main-grid">
 
         {/* Brand */}
-        <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
+        <div style={{ display:'flex', flexDirection:'column', gap:20, minWidth:0 }}>
           <Link to="/" style={{ display:'inline-block', borderRadius:12, textDecoration:'none' }}>
-            <img src="/images/logo.png" alt="Numero Info" style={{ height: 48, width: 'auto', display: 'block' }} />
+            <img src="/images/logo.png" alt="Numero Info" style={{ height: 48, width: 'auto', maxWidth: '100%', display: 'block' }} />
           </Link>
           <p style={{ maxWidth:280, fontSize:14, lineHeight:1.8, color:'rgba(255,255,255,0.6)' }}>
             Telecom VAS platforms, Direct Carrier Billing with content and digital marketing, and cross-border payments across 50+ currencies.
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         {/* Quick links */}
-        <div>
+        <div style={{ minWidth:0 }}>
           <h2 style={{ fontFamily:'Space Grotesk', fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--primary-light)', marginBottom:20 }}>Quick Links</h2>
           <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:4 }}>
             {navLinks.map(({ to, label }) => (
@@ -72,9 +72,9 @@ export default function Footer() {
         </div>
 
         {/* Contact + Address */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40 }}>
+        <div className="footer-contact-grid">
           {/* Get in touch */}
-          <div>
+          <div style={{ minWidth:0 }}>
             <h2 style={{ fontFamily:'Space Grotesk', fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--primary-light)', marginBottom:20 }}>Get in Touch</h2>
             <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:12 }}>
               {[
@@ -84,7 +84,7 @@ export default function Footer() {
               ].map((item, i) => (
                 <li key={i}>
                   {item.href ? (
-                    <a href={item.href} style={{ display:'flex', alignItems:'center', gap:12, fontSize:14, color:'rgba(255,255,255,0.65)', textDecoration:'none', transition:'color 0.3s' }}
+                    <a href={item.href} style={{ display:'flex', alignItems:'center', gap:12, fontSize:14, color:'rgba(255,255,255,0.65)', textDecoration:'none', transition:'color 0.3s', wordBreak:'break-word' }}
                       onMouseEnter={e => e.currentTarget.style.color = '#fff'}
                       onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.65)'}>
                       <span style={{ width:36, height:36, borderRadius:10, background:'rgba(255,255,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, flexShrink:0, transition:'background 0.3s' }}>{item.icon}</span>
@@ -105,14 +105,14 @@ export default function Footer() {
           </div>
 
           {/* Address */}
-          <div>
+          <div style={{ minWidth:0 }}>
             <h2 style={{ fontFamily:'Space Grotesk', fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--primary-light)', marginBottom:20 }}>Our Office</h2>
             <a href="https://www.google.com/maps/search/?api=1&query=B+123+Sector+54+Gurgaon+Haryana" target="_blank" rel="noopener noreferrer"
               style={{ display:'flex', gap:12, padding:14, borderRadius:16, border:'1px solid rgba(255,255,255,0.08)', background:'rgba(255,255,255,0.04)', textDecoration:'none', transition:'all 0.3s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,58,237,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.transform = 'translateY(0)' }}>
               <span style={{ width:36, height:36, borderRadius:10, background:'rgba(255,255,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, flexShrink:0 }}>📍</span>
-              <span style={{ fontSize:13 }}>
+              <span style={{ fontSize:13, minWidth:0 }}>
                 <span style={{ display:'flex', justifyContent:'space-between', fontFamily:'Space Grotesk', fontWeight:600, color:'#fff', marginBottom:4 }}>
                   Gurgaon, India
                   <span style={{ fontSize:11, opacity:0.5 }}>↗</span>
@@ -120,22 +120,6 @@ export default function Footer() {
                 <span style={{ display:'block', color:'rgba(255,255,255,0.55)', lineHeight:1.6 }}>B 123 First Floor, Sector 54<br />Gurgaon, Haryana 122003</span>
               </span>
             </a>
-
-            {/* Social */}
-            <div style={{ display:'flex', gap:10, marginTop:20 }}>
-              {[
-                { icon:'f', href:'#', label:'Facebook' },
-                { icon:'in', href:'https://linkedin.com', label:'LinkedIn' },
-                { icon:'tw', href:'#', label:'Twitter' },
-                { icon:'ig', href:'#', label:'Instagram' },
-              ].map(s => (
-                <a key={s.label} href={s.href} aria-label={s.label} style={{ width:36, height:36, borderRadius:10, background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.1)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:11, fontWeight:700, color:'rgba(255,255,255,0.6)', textDecoration:'none', transition:'all 0.3s' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.color = '#fff' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}>
-                  {s.icon}
-                </a>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -151,25 +135,53 @@ export default function Footer() {
           <p style={{ maxWidth:560 }}>
             Numero Info IT Services is an IT Division of Numero Mobile Private Limited.
           </p>
-          <div style={{ display:'flex', alignItems:'center', gap:16, flexShrink:0 }}>
-            <p>© {new Date().getFullYear()} NUMERO INFO</p>
-            <button onClick={() => window.scrollTo({ top:0, behavior:'smooth' })} style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'7px 14px', borderRadius:50, background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.1)', color:'#fff', fontSize:12, fontWeight:600, cursor:'pointer', transition:'all 0.3s', fontFamily:'Space Grotesk' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'var(--primary)'; e.currentTarget.style.borderColor = 'var(--primary)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}>
-              Back to top ↑
-            </button>
-          </div>
+          <p style={{ flexShrink:0 }}>© {new Date().getFullYear()} NUMERO INFO</p>
         </div>
       </div>
 
       <style>{`
         @keyframes ecgF { from{stroke-dashoffset:1} to{stroke-dashoffset:-1} }
         @keyframes pulseF { 0%,100%{opacity:1} 50%{opacity:0.5} }
-        @media(max-width:992px){
-          .footer-main-grid { grid-template-columns: 1fr 1fr !important; }
+        .footer-main-grid {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 1.1fr 0.6fr 1.8fr;
+          gap: 56px;
+          padding-top: 48px;
+          padding-bottom: 40px;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
         }
-        @media(max-width:640px){
-          .footer-main-grid { grid-template-columns: 1fr !important; }
+        .footer-contact-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+          min-width: 0;
+        }
+        @media (max-width: 992px) {
+          .footer-main-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+          }
+          .footer-contact-grid {
+            grid-column: 1 / -1;
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+        @media (max-width: 640px) {
+          .footer-main-grid {
+            grid-template-columns: 1fr;
+            gap: 36px;
+            padding-top: 32px;
+            padding-bottom: 28px;
+          }
+          .footer-contact-grid {
+            grid-column: auto;
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
         }
       `}</style>
     </footer>
