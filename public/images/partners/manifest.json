@@ -1,0 +1,176 @@
+[
+  {
+    "id": "mtn",
+    "name": "MTN",
+    "file": "mtn.webp",
+    "source": "commons"
+  },
+  {
+    "id": "zain",
+    "name": "Zain",
+    "file": "zain.webp",
+    "source": "commons"
+  },
+  {
+    "id": "vodafone",
+    "name": "Vodafone",
+    "file": "vodafone.webp",
+    "source": "commons"
+  },
+  {
+    "id": "airtel",
+    "name": "Airtel",
+    "file": "airtel.webp",
+    "source": "commons"
+  },
+  {
+    "id": "tigo",
+    "name": "Tigo",
+    "file": "tigo.svg",
+    "source": "wordmark"
+  },
+  {
+    "id": "sudani",
+    "name": "Sudani",
+    "file": "sudani.svg",
+    "source": "wordmark"
+  },
+  {
+    "id": "orange",
+    "name": "Orange",
+    "file": "orange.webp",
+    "source": "commons"
+  },
+  {
+    "id": "btc",
+    "name": "BTC",
+    "file": "btc.png",
+    "source": "favicon"
+  },
+  {
+    "id": "mascom",
+    "name": "Mascom",
+    "file": "mascom.png",
+    "source": "favicon"
+  },
+  {
+    "id": "america-movil",
+    "name": "América Móvil",
+    "file": "america-movil.png",
+    "source": "favicon"
+  },
+  {
+    "id": "digicel",
+    "name": "Digicel",
+    "file": "digicel.webp",
+    "source": "commons"
+  },
+  {
+    "id": "claro",
+    "name": "Claro",
+    "file": "claro.webp",
+    "source": "commons"
+  },
+  {
+    "id": "etisalat",
+    "name": "e&",
+    "file": "etisalat.webp",
+    "source": "commons"
+  },
+  {
+    "id": "ooredoo",
+    "name": "Ooredoo",
+    "file": "ooredoo.webp",
+    "source": "commons"
+  },
+  {
+    "id": "korek",
+    "name": "Korek",
+    "file": "korek.png",
+    "source": "favicon"
+  },
+  {
+    "id": "safaricom",
+    "name": "Safaricom",
+    "file": "safaricom.webp",
+    "source": "commons"
+  },
+  {
+    "id": "dialog",
+    "name": "Dialog",
+    "file": "dialog.png",
+    "source": "favicon"
+  },
+  {
+    "id": "hutch",
+    "name": "Hutch",
+    "file": "hutch.jpg",
+    "source": "favicon"
+  },
+  {
+    "id": "mobitel",
+    "name": "Mobitel",
+    "file": "mobitel.png",
+    "source": "favicon"
+  },
+  {
+    "id": "movitel",
+    "name": "Movitel",
+    "file": "movitel.svg",
+    "source": "wordmark"
+  },
+  {
+    "id": "telcel",
+    "name": "Telcel",
+    "file": "telcel.webp",
+    "source": "commons"
+  },
+  {
+    "id": "tim",
+    "name": "TIM",
+    "file": "tim.png",
+    "source": "favicon"
+  },
+  {
+    "id": "personal",
+    "name": "Personal",
+    "file": "personal.png",
+    "source": "favicon"
+  },
+  {
+    "id": "entel",
+    "name": "Entel",
+    "file": "entel.png",
+    "source": "favicon"
+  },
+  {
+    "id": "du",
+    "name": "du",
+    "file": "du.png",
+    "source": "favicon"
+  },
+  {
+    "id": "ais",
+    "name": "AIS",
+    "file": "ais.png",
+    "source": "favicon"
+  },
+  {
+    "id": "truemove",
+    "name": "TrueMove",
+    "file": "truemove.png",
+    "source": "favicon"
+  },
+  {
+    "id": "timwe",
+    "name": "Timwe",
+    "file": "timwe.png",
+    "source": "favicon"
+  },
+  {
+    "id": "comviva",
+    "name": "Comviva",
+    "file": "comviva.png",
+    "source": "favicon"
+  }
+]

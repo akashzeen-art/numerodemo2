@@ -8,8 +8,8 @@ export const pillars = [
     emoji: '📡',
     title: 'VAS Platforms',
     tagline: 'Telecom solutions that connect, engage & grow.',
-    desc: 'From USSD and SMSC to Cloud IVR and mobile advertising — the network capabilities, value-added services and campaigns operators and enterprises need, in one place.',
-    color: '#7c3aed',
+    desc: 'From USSD and SMS Gateway to mobile advertising — the network capabilities, value-added services and campaigns operators and enterprises need, in one place.',
+    color: '#0c7c6b',
   },
   {
     id: 'dcb',
@@ -17,8 +17,17 @@ export const pillars = [
     emoji: '📱',
     title: 'Direct Carrier Billing',
     tagline: 'Pay with your mobile. Grow with digital.',
-    desc: 'Let customers buy instantly using their phone bill or prepaid balance, give them content they love, and reach more of them with digital marketing that drives conversions.',
-    color: '#10b981',
+    desc: 'Let customers buy instantly using their phone bill or prepaid balance — checkout built for the phone, across prepaid and postpaid.',
+    color: '#0e5f8a',
+  },
+  {
+    id: 'd2c',
+    icon: 'cloud.png',
+    emoji: '🛒',
+    title: 'D2C & Digital Content',
+    tagline: 'Content users love. Campaigns that convert.',
+    desc: 'HD games, VOD, audio books and 360° digital marketing — so carriers and brands reach subscribers directly and keep them engaged.',
+    color: '#148f7a',
   },
   {
     id: 'forex',
@@ -26,8 +35,8 @@ export const pillars = [
     emoji: '💱',
     title: 'Forex & Cross-Border Payments',
     tagline: 'Connecting People. Payments. Processes. Across Borders.',
-    desc: 'Every payment has a journey. We connect countries, currencies, and stakeholders into one clear process.',
-    color: '#06b6d4',
+    desc: 'Every payment has a journey. We connect countries, currencies and stakeholders into one clear process.',
+    color: '#b8612e',
   },
 ]
 
@@ -36,26 +45,22 @@ export const vasCategories = [
     id: 'offers-enablement',
     title: 'Offers Enablement',
     emoji: '🎯',
-    accent: '#4f46e5',
-    gradient: 'linear-gradient(45deg, #4338ca 0%, #818cf8 100%)',
+    accent: '#0c7c6b',
+    gradient: 'linear-gradient(45deg, #0c7c6b 0%, #14a08a 100%)',
     image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=70',
     tagline: 'For smarter offers',
     blurb: 'Network capabilities that let operators launch, target and deliver offers in real time.',
     intro: 'Enabling Smarter Offers, Powered by Intelligent Network Capabilities.',
     items: [
       { name: 'USSD', fullName: 'Unstructured Supplementary Service Data', headline: 'Reach every mobile user — instantly', summary: 'Engage users with real-time, interactive menus that work on any device, no internet needed. Perfect for mass reach and frictionless service access.' },
-      { name: 'SMSC', fullName: 'Short Message Service Centre', headline: 'Deliver messages that matter — at scale', summary: 'Power your network with lightning-fast, secure SMS delivery for both businesses and subscribers. High throughput. Zero compromise.' },
-      { name: 'DMC', fullName: 'Device Management Centre', headline: 'Control every device — without lifting a finger', summary: 'Push updates, set configurations, and resolve issues remotely. Smarter device management starts here.' },
-      { name: 'LBS', fullName: 'Location Based Services', headline: 'Right place. Right time. Real results.', summary: 'Send location-targeted messages, trigger instant alerts, or personalize experiences based on where your users are — in real time.' },
-      { name: 'Mobicharge', fullName: 'Electronic Voucher Distribution', headline: 'Recharge, wallets and dealers in one platform', summary: 'A real-time Electronic Voucher Distribution system designed for telecom operators. It enables airtime recharge, wallet management, and dealer network control — all from one unified platform.' },
     ],
   },
   {
     id: 'core-vas',
     title: 'Core VAS',
     emoji: '📞',
-    accent: '#7c3aed',
-    gradient: 'linear-gradient(45deg, #4c1d95 0%, #7c3aed 55%, #a78bfa 100%)',
+    accent: '#0e5f8a',
+    gradient: 'linear-gradient(45deg, #0e5f8a 0%, #148f7a 100%)',
     image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=800&q=70',
     tagline: 'For seamless calling',
     blurb: 'Call-completion services that keep subscribers connected, even when a call can’t go through.',
@@ -69,8 +74,8 @@ export const vasCategories = [
     id: 'vas-digital',
     title: 'VAS & Digital',
     emoji: '⚙️',
-    accent: '#9333ea',
-    gradient: 'linear-gradient(45deg, #6b21a8 0%, #c084fc 100%)',
+    accent: '#0c7c6b',
+    gradient: 'linear-gradient(45deg, #0c7c6b 0%, #0e5f8a 100%)',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=70',
     tagline: 'For digital growth',
     blurb: 'Flexible platforms to create, integrate and scale value-added digital services quickly.',
@@ -78,7 +83,6 @@ export const vasCategories = [
     items: [
       { name: 'SDP', fullName: 'Service Delivery Platform', headline: 'Launch and scale VAS faster', summary: 'A centralized platform that streamlines service creation, management, and integration — so operators launch and scale VAS quickly.' },
       { name: 'WAVE', fullName: null, headline: 'Seamless Connectivity, Smarter Control', summary: 'A next-generation solution for integrating Diameter based and application network elements.' },
-      { name: 'Cloud IVR', fullName: 'Interactive Voice Response', headline: 'Self-service voice journeys', summary: 'An automated voice-driven system that interacts with callers through menus, keypad input, and speech recognition.' },
       { name: 'CRBT', fullName: 'Caller Ring Back Tone', headline: 'Turn every ring into revenue', summary: 'Replaces the standard ringing tone with music, messages, or promotional content — a recurring revenue stream for operators.' },
     ],
   },
@@ -86,8 +90,8 @@ export const vasCategories = [
     id: 'mobile-advertisement',
     title: 'Mobile Advertisement',
     emoji: '📣',
-    accent: '#c026d3',
-    gradient: 'linear-gradient(45deg, #86198f 0%, #c026d3 55%, #e879f9 100%)',
+    accent: '#b8612e',
+    gradient: 'linear-gradient(45deg, #b8612e 0%, #0c7c6b 100%)',
     image: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=800&q=70',
     tagline: 'For high-reach campaigns',
     blurb: 'Bulk SMS, USSD Push, OBD and Balance + campaigns that reach every mobile user.',
@@ -108,7 +112,7 @@ export const vasProducts = vasCategories.flatMap(c =>
 export const vasDemos = [
   { product: 'USSD', title: 'Interactive menus on any phone', text: 'A subscriber dials *123#, browses offers and activates one in seconds — no app, no internet.' },
   { product: 'MCN & CMB', title: 'Never miss a call again', text: 'When a subscriber is unreachable, they get an instant missed call alert and a call-back request.' },
-  { product: 'Cloud IVR', title: 'Self-service voice journeys', text: 'Callers move through voice menus with keypad input and get answers instantly, 24/7.' },
+  { product: 'CRBT', title: 'Turn every ring into revenue', text: 'Replace the standard ringback with music or promos — a recurring revenue stream for operators.' },
   { product: 'Bulk SMS', title: 'One campaign, every subscriber', text: 'Push a personalised offer to thousands of users and watch delivery happen in real time.' },
 ]
 
@@ -206,7 +210,7 @@ export const forex = {
     },
   ],
   stats: [
-    { value: '50+', label: 'Currencies', desc: 'Major, exotic and illiquid markets managed seamlessly.' },
+    { value: '50+', label: 'Geos', desc: 'Major, exotic and illiquid markets managed seamlessly.' },
     { value: '24–48 H', label: 'Turnaround', desc: 'Inward and outward cross-border payments executed fast.' },
     { value: 'Worldwide', label: 'Coverage', desc: 'Deep liquidity across African markets and beyond.' },
   ],
@@ -230,16 +234,17 @@ export const forex = {
 }
 
 export const marqueeItems = [
-  'USSD', 'SMSC', 'Cloud IVR', 'CRBT', 'Bulk SMS', 'USSD Push', 'OBD', 'Balance +',
+  'VAS', 'DCB', 'D2C', 'Forex',
+  'USSD',
   'Direct Carrier Billing', 'AI Ginnie *786#', 'HD Games', 'VOD', 'Digital Marketing',
-  'Forex', 'Cross-Border Payments', '50+ Currencies',
+  'Cross-Border Payments', '50+ Geos',
 ]
 
 export const serviceOptions = [
   ...vasCategories.map(c => `VAS — ${c.title}`),
-  'Direct Carrier Billing',
-  'Content (Games, VOD, Audio Books)',
-  'Digital Marketing',
+  'Direct Carrier Billing (DCB)',
+  'D2C — Content (Games, VOD, Audio Books)',
+  'D2C — Digital Marketing',
   'Forex & Cross-Border Payments',
   'Other',
 ]

@@ -254,9 +254,9 @@ export default function DisasterRecovery() {
           <i data-lucide="twitter" />
           <i data-lucide="linkedin" />
           <i data-lucide="mail" />
-          companyprofile@numeroinfo.asia
+          mohit@numeromobile.com
         </div>
-        <p style={{ margin: 0 }}>© 2026 NUMERO INFO. Safeguarding businesses against the unpredictable.</p>
+        <p style={{ margin: 0 }}>© {new Date().getFullYear()} Numero Mobile. Safeguarding businesses against the unpredictable.</p>
       </footer>
     </div>
   )

@@ -18,10 +18,29 @@ function ScrollToTop() {
 
 function Root() {
   const [showApp, setShowApp] = useState(false)
+  useEffect(() => {
+    try {
+      const force = new URLSearchParams(window.location.search).has('intro')
+      if (!force && sessionStorage.getItem('numero-intro-v3') === '1') setShowApp(true)
+    } catch { /* ignore */ }
+    // Safety: slightly past the 6s intro so Skip / normal finish still win first
+    const t = setTimeout(() => setShowApp(true), 9_000)
+    return () => clearTimeout(t)
+  }, [])
+  const finish = () => {
+    try { sessionStorage.setItem('numero-intro-v3', '1') } catch { /* ignore */ }
+    setShowApp(true)
+  }
   return (
     <>
-      {!showApp && <Prelander onDone={() => setShowApp(true)} />}
-      <div style={{ opacity: showApp ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+      {!showApp && <Prelander onDone={finish} />}
+      <div
+        style={{
+          opacity: showApp ? 1 : 0,
+          visibility: showApp ? 'visible' : 'hidden',
+          transition: 'opacity 0.45s ease',
+        }}
+      >
         <ScrollToTop />
         <App />
       </div>

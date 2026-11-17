@@ -5,7 +5,6 @@ import '../styles/navbar.css'
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/services', label: 'Services' },
-  { to: '/portfolio', label: 'Products' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -14,9 +13,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
+  // Dark heroes on these routes need light nav text until scroll
+  const onHero = ['/', '/services', '/about', '/contact'].includes(pathname)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -29,7 +30,7 @@ export default function Navbar() {
   }, [open])
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
+    <nav className={`navbar${scrolled ? ' scrolled' : ''}${onHero ? ' on-hero' : ''}`}>
       <div className="container">
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">

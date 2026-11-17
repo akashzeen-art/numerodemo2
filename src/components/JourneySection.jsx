@@ -1,200 +1,206 @@
-import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import '../styles/journey.css'
 
-const stages = [
+const IconCard = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /><path d="M6 14h2" />
+  </svg>
+)
+const IconBank = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M10 18v-7" /><path d="M11.12 2.2a2 2 0 0 1 1.76 0l7.84 3.85A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.95z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" />
+  </svg>
+)
+const IconPhone = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" />
+  </svg>
+)
+const IconCheck = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+)
+const IconTrend = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M16 7h6v6" /><path d="m22 7-8.5 8.5-5-5L2 17" />
+  </svg>
+)
+const IconGift = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13" /><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" />
+  </svg>
+)
+
+function PhoneShell({ children, step, color }) {
+  return (
+    <div className="jp-phone-wrap" style={{ '--c': color }}>
+      <div className="jp-orbit" aria-hidden="true" />
+      <div className="jp-phone">
+        <span className="jp-notch" />
+        <div className="jp-screen">
+          <div className="jp-status">
+            <span>9:41</span>
+            <span className="jp-signal"><i /><i /><i /><i /></span>
+          </div>
+          {children}
+        </div>
+      </div>
+      <div className="jp-dots" aria-hidden="true">
+        {[0, 1, 2, 3].map((i) => (
+          <i key={i} className={i < step ? 'is-done' : i === step - 1 ? 'is-active' : ''} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const phones = [
   {
-    num: 1, color: '#7c3aed', title: 'Choose a purchase', icon: '🛒', tag: 'Purchase',
+    num: 1,
+    color: '#2bb894',
+    tag: 'Purchase',
+    title: 'Choose a purchase',
     desc: 'The user picks a game, subscription, app or digital content online.',
-    steps: 'Games · Subscriptions · Apps',
-    img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=75',
+    badge: { icon: <IconPhone />, text: 'Games · Apps · VOD' },
+    screen: (
+      <>
+        <p className="jp-label">Pick content</p>
+        <ul className="jp-list">
+          <li className="is-active">
+            <span className="jp-logo">S</span>
+            <div><strong>StreamPlus</strong><small>Premium · 1 month</small></div>
+            <span className="jp-price"><small>AED</small>19</span>
+          </li>
+          <li>
+            <span className="jp-logo jp-logo--g">G</span>
+            <div><strong>HD Games Pack</strong><small>Weekly pass</small></div>
+            <span className="jp-price"><small>AED</small>9</span>
+          </li>
+          <li>
+            <span className="jp-logo jp-logo--a">A</span>
+            <div><strong>Audio Books</strong><small>3 titles</small></div>
+            <span className="jp-price"><small>AED</small>12</span>
+          </li>
+        </ul>
+        <span className="jp-btn">Continue</span>
+      </>
+    ),
   },
   {
-    num: 2, color: '#06b6d4', title: 'Pay with mobile', icon: '📱', tag: 'Checkout',
+    num: 2,
+    color: '#7b6cf0',
+    tag: 'Checkout',
+    title: 'Pay with mobile',
     desc: 'They select their mobile number as the payment method and confirm. No card needed — checkout built for the phone.',
-    steps: 'Any mobile device',
-    img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=75',
+    badge: { icon: <IconCard />, text: 'No card needed' },
+    screen: (
+      <>
+        <div className="jp-app">
+          <span className="jp-logo">S</span>
+          <div><strong>StreamPlus</strong><small>Premium · 1 month</small></div>
+          <span className="jp-price"><small>AED</small>19</span>
+        </div>
+        <p className="jp-label">Choose payment</p>
+        <ul className="jp-methods">
+          <li><IconCard />Credit / debit card<span className="jp-radio" /></li>
+          <li><IconBank />Net banking<span className="jp-radio" /></li>
+          <li className="is-dcb is-active">
+            <IconPhone />Pay with mobile bill
+            <span className="jp-radio is-on"><IconCheck /></span>
+          </li>
+        </ul>
+        <span className="jp-btn is-ready">Continue</span>
+      </>
+    ),
   },
   {
-    num: 3, color: '#f59e0b', title: 'Charged by the operator', icon: '🧾', tag: 'Billing',
+    num: 3,
+    color: '#c4783a',
+    tag: 'Billing',
+    title: 'Charged by the operator',
     desc: 'The amount is added to the phone bill or deducted from prepaid balance.',
-    steps: 'Mobile bill or prepaid SIM',
-    img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=75',
+    badge: { icon: <IconPhone />, text: 'Any mobile device' },
+    screen: (
+      <>
+        <p className="jp-label">Confirm charge</p>
+        <div className="jp-bill">
+          <strong>AED 19.00</strong>
+          <small>Added to mobile bill</small>
+        </div>
+        <ul className="jp-list jp-list--plain">
+          <li><span>Number</span><b>+971 •• •• 4412</b></li>
+          <li><span>Operator</span><b>Carrier network</b></li>
+          <li><span>Type</span><b>Postpaid / prepaid</b></li>
+        </ul>
+        <span className="jp-btn is-ready">Confirm</span>
+      </>
+    ),
   },
   {
-    num: 4, color: '#10b981', title: 'Enjoy & get rewarded', icon: '🎁', tag: 'Engagement',
+    num: 4,
+    color: '#2bb894',
+    tag: 'Engagement',
+    title: 'Enjoy & get rewarded',
     desc: 'Users get the audio books, VOD, HD games and contests they love — and subscribers unlock gifts that keep them coming back.',
-    steps: 'Higher conversions',
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=75',
+    badge: { icon: <IconTrend />, text: 'Higher conversions' },
+    screen: (
+      <>
+        <div className="jp-success">
+          <span className="jp-check"><IconCheck /></span>
+          <strong>You&apos;re in</strong>
+          <small>StreamPlus Premium unlocked</small>
+        </div>
+        <ul className="jp-list jp-list--plain">
+          <li><IconGift /><div><strong>Reward unlocked</strong><small>Extra game credits</small></div></li>
+          <li><IconTrend /><div><strong>Come back bonus</strong><small>Next week offer</small></div></li>
+        </ul>
+        <span className="jp-btn is-ready">Start watching</span>
+      </>
+    ),
   },
 ]
 
 export default function JourneySection() {
-  const [active, setActive] = useState(0)
-  const [imgY, setImgY] = useState(0)
-  const outerRef = useRef(null)   // tall scroll container
-  const stickyRef = useRef(null)  // sticky panel
-
-  useEffect(() => {
-    const onScroll = () => {
-      const outer = outerRef.current
-      if (!outer) return
-      const rect = outer.getBoundingClientRect()
-      const totalScroll = outer.offsetHeight - window.innerHeight
-      const scrolled = Math.max(0, -rect.top)
-      const progress = Math.min(scrolled / totalScroll, 1)
-
-      // Map progress → stage index (0-3)
-      const idx = Math.min(Math.floor(progress * stages.length), stages.length - 1)
-      setActive(idx)
-
-      // Parallax: image shifts slightly as user scrolls
-      setImgY(scrolled * 0.06)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const s = stages[active]
-  const progress = ((active + 1) / stages.length) * 100
-
   return (
-    // Tall outer div — 4× viewport height so each stage gets ~1 screen of scroll
-    <div ref={outerRef} style={{ height: `${stages.length * 100}vh`, position: 'relative' }}>
-
-      {/* Sticky panel */}
-      <div ref={stickyRef} style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', background: 'var(--dark2)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-
-        {/* BG glow */}
-        <div style={{ position: 'absolute', width: 700, height: 700, borderRadius: '50%', background: `${s.color}08`, filter: 'blur(140px)', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', transition: 'background 0.7s ease', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px)', backgroundSize: '60px 60px', pointerEvents: 'none' }} />
-
-        <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
-
-          {/* Header */}
-          <div style={{ marginBottom: 56 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 18px', borderRadius: 50, background: `${s.color}15`, border: `1px solid ${s.color}30`, marginBottom: 16, transition: 'all 0.6s' }}>
-              <span style={{ width: 7, height: 7, borderRadius: '50%', background: s.color, boxShadow: `0 0 10px ${s.color}`, animation: 'pulseDotJ 2s infinite' }} />
-              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: s.color }}>Direct Carrier Billing</span>
-            </div>
-            <h2 style={{ fontSize: 'clamp(1.6rem,2.8vw,2.6rem)', fontWeight: 800, color: 'var(--white)', lineHeight: 1.2 }}>
-              Pay with your mobile,{' '}
-              <span style={{ background: 'var(--gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>no card needed</span>
-            </h2>
-          </div>
-
-          {/* 2-col */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 64, alignItems: 'center' }}>
-
-            {/* Left — text */}
-            <div>
-              <div style={{ position: 'relative', height: 230, marginBottom: 40 }}>
-                {stages.map((st, i) => (
-                  <article key={i} style={{
-                    position: 'absolute', inset: 0,
-                    opacity: i === active ? 1 : 0,
-                    transform: i === active ? 'translateY(0) scale(1)' : i < active ? 'translateY(-22px) scale(0.97)' : 'translateY(26px) scale(0.97)',
-                    transition: 'all 0.75s cubic-bezier(0.16,1,0.3,1)',
-                    pointerEvents: i === active ? 'auto' : 'none',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 18 }}>
-                      <span style={{ width: 60, height: 60, borderRadius: 18, background: st.color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 900, fontFamily: 'Space Grotesk', boxShadow: `0 0 32px ${st.color}70, 0 8px 24px rgba(0,0,0,0.3)`, flexShrink: 0 }}>{st.num}</span>
-                      <div>
-                        <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: st.color, display: 'block', marginBottom: 3 }}>{st.tag}</span>
-                        <h3 style={{ fontSize: 'clamp(1.1rem,1.8vw,1.55rem)', fontWeight: 800, color: 'var(--white)', fontFamily: 'Space Grotesk', lineHeight: 1.2 }}>{st.title}</h3>
-                      </div>
-                    </div>
-                    <p style={{ fontSize: 15, color: 'var(--text-muted)', lineHeight: 1.85, maxWidth: 420, marginBottom: 18 }}>{st.desc}</p>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 14px', borderRadius: 50, background: `${st.color}10`, border: `1px solid ${st.color}25`, fontSize: 11, fontWeight: 600, color: st.color }}>
-                      <span style={{ width: 4, height: 4, borderRadius: '50%', background: st.color }} />{st.steps}
-                    </span>
-                  </article>
-                ))}
-              </div>
-
-              <Link to="/services#dcb" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--gradient)', color: '#fff', padding: '13px 28px', borderRadius: 50, fontWeight: 700, fontSize: 14, textDecoration: 'none', boxShadow: '0 8px 28px rgba(124,58,237,0.45)', transition: 'all 0.3s' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(124,58,237,0.65)' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(124,58,237,0.45)' }}>
-                Explore Carrier Billing →
-              </Link>
-            </div>
-
-            {/* Right — parallax image */}
-            <div style={{ position: 'relative', height: 'min(55vh, 420px)', borderRadius: 28, overflow: 'hidden', boxShadow: '0 40px 80px rgba(0,0,0,0.55)', isolation: 'isolate' }}>
-              {/* Active border ring */}
-              <div style={{ position: 'absolute', inset: 0, borderRadius: 28, border: `1px solid ${s.color}45`, zIndex: 3, pointerEvents: 'none', transition: 'border-color 0.6s' }} />
-
-              {stages.map((st, i) => (
-                <div key={i} style={{
-                  position: 'absolute', inset: 0, overflow: 'hidden',
-                  clipPath: i === active ? 'inset(0% 0% 0%)' : 'inset(100% 0% 0%)',
-                  transition: 'clip-path 0.95s cubic-bezier(0.16,1,0.3,1)',
-                  zIndex: i === active ? 1 : 0,
-                }}>
-                  <img src={st.img} alt={st.title} style={{
-                    width: '100%', height: '120%', objectFit: 'cover', display: 'block',
-                    transform: `translateY(${i === active ? -imgY * 0.35 : 0}px) scale(${i === active ? 1 : 1.06})`,
-                    transition: i === active ? 'transform 0.05s linear' : 'transform 0.9s ease',
-                    willChange: 'transform',
-                  }} />
-                  <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${st.color}55 0%, rgba(0,0,0,0.15) 55%, transparent 100%)` }} />
-
-                  {/* Badge */}
-                  <div style={{ position: 'absolute', bottom: 20, left: 20, display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(16px)', padding: '10px 18px 10px 12px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.1)', zIndex: 2 }}>
-                    <span style={{ width: 36, height: 36, borderRadius: 10, background: st.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, boxShadow: `0 0 16px ${st.color}60` }}>{st.icon}</span>
-                    <div>
-                      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontWeight: 600 }}>Stage {st.num}</div>
-                      <div style={{ fontSize: 13, color: '#fff', fontWeight: 700 }}>{st.title}</div>
-                    </div>
-                  </div>
-
-                  {/* Counter */}
-                  <div style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(12px)', padding: '5px 12px', borderRadius: 50, fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', border: '1px solid rgba(255,255,255,0.1)', zIndex: 2 }}>
-                    {String(i + 1).padStart(2, '0')} / 04
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Progress nav */}
-          <div style={{ marginTop: 52, maxWidth: 800, margin: '52px auto 0' }}>
-            <div style={{ position: 'relative', marginBottom: 20 }}>
-              <div style={{ height: 2, background: 'rgba(255,255,255,0.07)', borderRadius: 2, margin: '0 12.5%', overflow: 'hidden' }}>
-                <div style={{ height: '100%', background: 'var(--gradient)', transformOrigin: 'left', transform: `scaleX(${progress / 100})`, transition: 'transform 0.5s ease', boxShadow: `0 0 12px ${s.color}` }} />
-              </div>
-              <div style={{ position: 'absolute', top: '50%', left: `calc(12.5% + ${(progress / 100) * 75}%)`, transform: 'translate(-50%,-50%)', width: 28, height: 28, borderRadius: '50%', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 20px ${s.color}`, transition: 'left 0.5s ease', zIndex: 2, fontSize: 12 }}>⚡</div>
-            </div>
-
-            <ol style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', listStyle: 'none', padding: 0, margin: 0 }}>
-              {stages.map((st, i) => (
-                <li key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                  <span style={{ width: 38, height: 38, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Space Grotesk', fontSize: 14, fontWeight: 800, transition: 'all 0.5s', background: i === active ? st.color : 'rgba(255,255,255,0.06)', color: i === active ? '#fff' : 'var(--text-muted)', transform: i === active ? 'scale(1.15)' : 'scale(1)', boxShadow: i === active ? `0 0 24px ${st.color}60` : 'none', border: i === active ? 'none' : '1px solid rgba(255,255,255,0.08)' }}>{st.num}</span>
-                  <span style={{ fontSize: 10, fontWeight: 600, fontFamily: 'Space Grotesk', color: i === active ? 'var(--white)' : 'var(--text-muted)', transition: 'color 0.3s', textAlign: 'center', lineHeight: 1.3 }}>{st.title}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
+    <section className="journey-section is-inview" id="dcb-journey">
+      <div className="container">
+        <div className="journey-head">
+          <div className="tag">Direct Carrier Billing</div>
+          <h2>Pay with your mobile — <em>no card needed</em></h2>
+          <p>Four steps. Four phones. One clear checkout built for the handset.</p>
+          <p className="jp-swipe-hint">Swipe sideways to see all 4 phones →</p>
         </div>
 
-        {/* Scroll hint — only on first stage */}
-        {active === 0 && (
-          <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, animation: 'fadeUp 0.6s both' }}>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Scroll to explore</span>
-            <div style={{ width: 20, height: 32, borderRadius: 10, border: '1px solid rgba(255,255,255,0.2)', display: 'flex', justifyContent: 'center', paddingTop: 6 }}>
-              <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--neon)', animation: 'scrollDotJ 1.5s ease-in-out infinite' }} />
-            </div>
-          </div>
-        )}
-      </div>
+        <div className="jp-phones">
+          {phones.map((p) => (
+            <article key={p.num} className="jp-card" style={{ '--c': p.color }}>
+              <div className="jp-card-copy">
+                <span className="jp-num">{p.num}</span>
+                <div>
+                  <span className="jp-tag">{p.tag}</span>
+                  <h3>{p.title}</h3>
+                </div>
+              </div>
+              <p className="jp-desc">{p.desc}</p>
 
-      <style>{`
-        @keyframes pulseDotJ{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.5)}}
-        @keyframes scrollDotJ{0%{transform:translateY(0);opacity:1}100%{transform:translateY(12px);opacity:0}}
-        @media(max-width:900px){
-          .journey-inner-grid{grid-template-columns:1fr!important}
-        }
-      `}</style>
-    </div>
+              <div className="hero-visual">
+                <PhoneShell step={p.num} color={p.color}>
+                  {p.screen}
+                </PhoneShell>
+                <span className="hero-badge" aria-hidden="true">
+                  {p.badge.icon}
+                  {p.badge.text}
+                </span>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="journey-cta">
+          <Link to="/services#dcb" className="btn-primary">Explore carrier billing →</Link>
+        </div>
+      </div>
+    </section>
   )
 }

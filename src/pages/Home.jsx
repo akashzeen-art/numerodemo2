@@ -4,390 +4,426 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import FlipCards from '../components/FlipCards'
 import JourneySection from '../components/JourneySection'
+import DiscShelf from '../components/DiscShelf'
+import PhoneProducts from '../components/PhoneProducts'
+import WhyTimeline from '../components/WhyTimeline'
+import ForexChartCard from '../components/ForexChartCard'
+import ServiceBookCard from '../components/ServiceBookCard'
 import useScrollReveal from '../hooks/useScrollReveal'
-import { pillars, forex, marqueeItems, vasProducts, dcb } from '../data/content'
+import ParallaxDepth from '../components/ParallaxDepth'
+import { pillars, forex } from '../data/content'
 import '../styles/global.css'
 import '../styles/home.css'
 
 const stats = [
-  { number: '3', label: 'Business Lines' },
-  { number: `${vasProducts.length}`, label: 'VAS Products' },
-  { number: `${dcb.content.length}`, label: 'Content Categories' },
-  { number: '50+', label: 'Currencies' },
+  { number: 6, suffix: '', label: 'Business lines' },
+  { number: 14, suffix: '+', label: 'VAS products' },
+  { number: 50, suffix: '+', label: 'Geos' },
+  { number: 11, suffix: '', label: 'Offices' },
 ]
 
-const whyUs = [
-  { icon: '📡', title: 'Carrier-Grade VAS',    desc: 'USSD, SMSC, Cloud IVR, CRBT and messaging on one carrier-grade platform.' },
-  { icon: '📱', title: 'Mobile-First Payments', desc: 'Checkout built for the phone, paid with just a mobile number.' },
-  { icon: '🌍', title: 'Global Content',        desc: 'Games, VOD, audio books and more, regularly refreshed for a global audience.' },
-  { icon: '📊', title: 'Measurable Outcomes',   desc: 'Track every transaction and campaign with clear, measurable results.' },
-  { icon: '💱', title: 'Deep Liquidity',        desc: '50+ currencies across major, exotic and illiquid markets.' },
-  { icon: '🛡️', title: 'Compliance & Control',  desc: 'Secure information, clear accountability and regulation-ready workflows.' },
-]
+function useCountUp(target, active, duration = 1400) {
+  const [value, setValue] = useState(0)
+  useEffect(() => {
+    if (!active) return
+    let raf
+    const start = performance.now()
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setValue(Math.round(target * eased))
+      if (t < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [active, target, duration])
+  return value
+}
 
-// 3D Tilt Card
-function TiltCard({ children, className, style }) {
+function StatItem({ number, suffix, label, delay }) {
   const ref = useRef(null)
-  const handleMove = e => {
+  const [active, setActive] = useState(false)
+  const value = useCountUp(number, active)
+
+  useEffect(() => {
     const el = ref.current
     if (!el) return
-    const rect = el.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    el.style.transform = `perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(10px)`
-  }
-  const handleLeave = () => {
-    if (ref.current) ref.current.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px)'
-  }
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setActive(true); io.disconnect() } },
+      { threshold: 0.4 }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
-    <div ref={ref} className={className} style={{ ...style, transition: 'transform 0.3s ease', transformStyle: 'preserve-3d' }}
-      onMouseMove={handleMove} onMouseLeave={handleLeave}>
-      {children}
+    <div ref={ref} className="stat-item reveal" style={{ transitionDelay: delay }}>
+      <div className="stat-number">{value}{suffix}</div>
+      <div className="stat-label">{label}</div>
     </div>
   )
 }
 
-// Particle background
-function Particles() {
-  const canvasRef = useRef(null)
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-    const particles = Array.from({ length: 60 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      r: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.4 + 0.1,
-    }))
-    let raf
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(124,58,237,${p.opacity})`
-        ctx.fill()
-      })
-      // Draw connections
-      particles.forEach((a, i) => {
-        particles.slice(i + 1).forEach(b => {
-          const dist = Math.hypot(a.x - b.x, a.y - b.y)
-          if (dist < 120) {
-            ctx.beginPath()
-            ctx.moveTo(a.x, a.y)
-            ctx.lineTo(b.x, b.y)
-            ctx.strokeStyle = `rgba(124,58,237,${0.08 * (1 - dist / 120)})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        })
-      })
-      raf = requestAnimationFrame(draw)
-    }
-    draw()
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
-    window.addEventListener('resize', resize)
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
-  }, [])
-  return <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }} />
-}
+const heroTitleWords = ['Connect', 'networks,', 'payments', '&', 'people', '—', 'in', 'one', 'clear', 'process.']
 
-// Typewriter
-function Typewriter({ words }) {
-  const [idx, setIdx] = useState(0)
-  const [text, setText] = useState('')
-  const [deleting, setDeleting] = useState(false)
-  useEffect(() => {
-    const word = words[idx]
-    const timeout = setTimeout(() => {
-      if (!deleting) {
-        setText(word.slice(0, text.length + 1))
-        if (text.length === word.length) setTimeout(() => setDeleting(true), 1500)
-      } else {
-        setText(word.slice(0, text.length - 1))
-        if (text.length === 0) { setDeleting(false); setIdx((idx + 1) % words.length) }
-      }
-    }, deleting ? 50 : 100)
-    return () => clearTimeout(timeout)
-  }, [text, deleting, idx, words])
+function TiltCard({ children, className = '', style, as: Tag = 'div', ...rest }) {
+  const ref = useRef(null)
+
+  const onMove = (e) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width
+    const y = (e.clientY - rect.top) / rect.height
+    const rx = (0.5 - y) * 10
+    const ry = (x - 0.5) * 12
+    el.style.setProperty('--rx', `${rx.toFixed(2)}deg`)
+    el.style.setProperty('--ry', `${ry.toFixed(2)}deg`)
+    el.style.setProperty('--gx', `${(x * 100).toFixed(1)}%`)
+    el.style.setProperty('--gy', `${(y * 100).toFixed(1)}%`)
+  }
+
+  const onLeave = () => {
+    const el = ref.current
+    if (!el) return
+    el.style.setProperty('--rx', '0deg')
+    el.style.setProperty('--ry', '0deg')
+  }
+
   return (
-    <span style={{ color: 'var(--neon)', textShadow: '0 0 20px rgba(0,255,240,0.6)' }}>
-      {text}<span style={{ animation: 'blink 1s infinite', borderRight: '2px solid var(--neon)' }} />
-    </span>
+    <Tag
+      ref={ref}
+      className={`tilt-card ${className}`.trim()}
+      style={style}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      {...rest}
+    >
+      {children}
+    </Tag>
   )
 }
 
 export default function Home() {
   useScrollReveal()
+  const heroRef = useRef(null)
+  const spotlightRef = useRef(null)
+  const booksGridRef = useRef(null)
+  const bookNodesRef = useRef(new Map())
+  const bookTimersRef = useRef({ open: 0, close: 0 })
+  const focusBookIdRef = useRef(null)
+  const openBookIdRef = useRef(null)
+  const [focusBookId, setFocusBookId] = useState(null)
+  const [openBookId, setOpenBookId] = useState(null)
+
+  const updateFocusBookId = (id) => {
+    focusBookIdRef.current = id
+    setFocusBookId(id)
+  }
+
+  const updateOpenBookId = (id) => {
+    openBookIdRef.current = id
+    setOpenBookId(id)
+  }
+
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+    const onMove = (e) => {
+      const rect = hero.getBoundingClientRect()
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8
+      hero.style.setProperty('--mx', `${x}px`)
+      hero.style.setProperty('--my', `${y}px`)
+      hero.style.setProperty('--hx', `${((e.clientX - rect.left) / rect.width) * 100}%`)
+      hero.style.setProperty('--hy', `${((e.clientY - rect.top) / rect.height) * 100}%`)
+    }
+    hero.addEventListener('mousemove', onMove)
+    return () => hero.removeEventListener('mousemove', onMove)
+  }, [])
+
+  useEffect(() => {
+    const root = spotlightRef.current
+    if (!root) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return undefined
+
+    const onMove = (e) => {
+      root.style.setProperty('--spot-x', `${e.clientX}px`)
+      root.style.setProperty('--spot-y', `${e.clientY}px`)
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+
+  useEffect(() => () => {
+    window.clearTimeout(bookTimersRef.current.open)
+    window.clearTimeout(bookTimersRef.current.close)
+  }, [])
+
+  const clearBookRoll = (id) => {
+    const node = bookNodesRef.current.get(id)
+    if (!node) return
+    node.style.removeProperty('--roll-x')
+    node.style.removeProperty('--roll-y')
+  }
+
+  const setBookRollToCenter = (id, node) => {
+    const grid = booksGridRef.current
+    if (!grid || !node) return
+    bookNodesRef.current.set(id, node)
+    // Measure from resting slot (ignore any prior focus transform)
+    const prevX = node.style.getPropertyValue('--roll-x')
+    const prevY = node.style.getPropertyValue('--roll-y')
+    node.style.setProperty('--roll-x', '0px')
+    node.style.setProperty('--roll-y', '0px')
+    const g = grid.getBoundingClientRect()
+    const b = node.getBoundingClientRect()
+    const dx = g.left + g.width / 2 - (b.left + b.width / 2)
+    const dy = g.top + g.height / 2 - (b.top + b.height / 2)
+    if (prevX) node.style.setProperty('--roll-x', prevX)
+    else node.style.removeProperty('--roll-x')
+    if (prevY) node.style.setProperty('--roll-y', prevY)
+    else node.style.removeProperty('--roll-y')
+    // Next frame: animate to center
+    requestAnimationFrame(() => {
+      node.style.setProperty('--roll-x', `${dx}px`)
+      node.style.setProperty('--roll-y', `${dy}px`)
+    })
+  }
+
+  const handleBookSelect = (id, node) => {
+    window.clearTimeout(bookTimersRef.current.open)
+    window.clearTimeout(bookTimersRef.current.close)
+    const currentFocus = focusBookIdRef.current
+    const currentOpen = openBookIdRef.current
+
+    // Outside click / Escape → put the book back
+    if (!id) {
+      updateOpenBookId(null)
+      bookTimersRef.current.close = window.setTimeout(() => {
+        if (focusBookIdRef.current) clearBookRoll(focusBookIdRef.current)
+        updateFocusBookId(null)
+      }, 420)
+      return
+    }
+
+    // Same book while open → close & roll back
+    if (currentFocus === id && currentOpen === id) {
+      updateOpenBookId(null)
+      bookTimersRef.current.close = window.setTimeout(() => {
+        clearBookRoll(id)
+        updateFocusBookId(null)
+      }, 420)
+      return
+    }
+
+    // Same book still rolling → ignore
+    if (currentFocus === id && currentOpen !== id) return
+
+    // Switch focus: close previous, roll new one in, then auto-open
+    if (currentFocus && currentFocus !== id) clearBookRoll(currentFocus)
+    updateOpenBookId(null)
+    updateFocusBookId(id)
+    if (node) setBookRollToCenter(id, node)
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    bookTimersRef.current.open = window.setTimeout(() => {
+      updateOpenBookId(id)
+    }, reduce ? 40 : 680)
+  }
 
   return (
-    <>
+    <div className="home-page" ref={spotlightRef}>
       <Navbar />
 
-      {/* Hero */}
-      <section className="home-hero">
-
-        {/* ── Background ── */}
-        <div className="home-hero-bg">
-          <div className="home-hero-video-wrap">
-            <video
-              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-              poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=75"
-              autoPlay loop playsInline muted preload="metadata" />
+      <section className="home-hero" ref={heroRef}>
+        <div className="home-hero-bg" aria-hidden="true">
+          <div className="home-hero-media" data-parallax="0.28">
+            <img
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80"
+              alt=""
+            />
           </div>
           <div className="home-hero-overlay" />
-          <div className="home-hero-radial" />
-          <div className="home-hero-lines" />
-          <div className="home-hero-blob home-hero-blob-1" />
-          <div className="home-hero-blob home-hero-blob-2" />
-          <svg viewBox="0 0 1400 120" preserveAspectRatio="none" className="home-hero-ecg" aria-hidden="true">
-            <path d="M0 60 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42"
-              fill="none" stroke="rgba(124,58,237,0.3)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
-            <path d="M0 60 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42 h50 l8 -10 l8 10 h12 l6 8 l10 -48 l10 64 l8 -24 h18 l14 -12 l14 12 h42"
-              pathLength="1" fill="none" stroke="#a78bfa" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke"
-              className="home-hero-ecg-path" />
+          <div className="home-hero-spotlight" />
+          <div className="home-hero-aurora" data-parallax="0.18" data-parallax-x="0.12" />
+          <div className="home-hero-grid" data-parallax="0.08" />
+          <svg className="home-hero-signals" data-parallax="0.12" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+            <path className="signal-path s1" d="M0 280 C 200 220, 320 340, 520 260 S 820 180, 1200 240" fill="none" />
+            <path className="signal-path s2" d="M0 320 C 180 360, 400 240, 620 300 S 940 340, 1200 280" fill="none" />
+            <path className="signal-path s3" d="M0 200 C 240 160, 380 280, 600 200 S 900 120, 1200 180" fill="none" />
           </svg>
+          <div className="home-hero-orb o1" data-parallax="0.35" data-parallax-x="-0.2" />
+          <div className="home-hero-orb o2" data-parallax="0.22" data-parallax-x="0.18" />
+          <div className="home-hero-orb o3" data-parallax="0.3" />
+          <div className="home-hero-rings" aria-hidden="true" data-parallax="0.1">
+            <span /><span /><span />
+          </div>
+          <div className="home-hero-particles" aria-hidden="true">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <span key={i} style={{ '--i': i }} />
+            ))}
+          </div>
+          <div className="home-hero-scan" aria-hidden="true" />
+          <div className="home-hero-grain" />
           <div className="home-hero-fade" />
         </div>
 
-        {/* ── Floating icons (desktop) ── */}
-        <div className="home-hero-floaters" aria-hidden="true">
-          {[{icon:'💱',top:'20%',right:'3%',delay:'0s',size:56},{icon:'📡',top:'13%',right:'40%',delay:'0.8s',size:44},{icon:'📱',bottom:'36%',right:'33%',delay:'1.6s',size:44},{icon:'🛡️',bottom:'40%',right:'2%',delay:'2.2s',size:48},{icon:'⚡',top:'11%',left:'44%',delay:'1.2s',size:36},{icon:'📊',top:'9%',right:'16%',delay:'2.8s',size:40}].map((f,i)=>(
-            <div key={i} className="home-hero-floater" style={{ top:f.top, bottom:f.bottom, right:f.right, left:f.left, width:f.size, height:f.size, fontSize:f.size*0.42, animationDelay:f.delay }}>{f.icon}</div>
-          ))}
+        <div className="container home-hero-content" data-parallax="-0.08">
+          <div className="home-hero-live">
+            <span className="home-hero-live-dot" />
+            <span className="home-hero-live-full">Live across networks &amp; corridors</span>
+            <span className="home-hero-live-short">Live · VAS · DCB · Forex</span>
+          </div>
+
+          <p className="home-hero-brand">
+            <span className="home-hero-flip" aria-label="Numero Mobile">
+              <span className="home-hero-flip-inner">
+                <span className="home-hero-flip-face home-hero-flip-front">Numero Mobile</span>
+                <span className="home-hero-flip-face home-hero-flip-back" aria-hidden="true">Numero Mobile</span>
+              </span>
+            </span>
+          </p>
+
+          <h1 className="home-hero-title home-hero-title-stagger">
+            {heroTitleWords.map((word, i) => (
+              <span key={`${word}-${i}`} className="home-hero-word" style={{ animationDelay: `${0.28 + i * 0.05}s` }}>
+                {word}{' '}
+              </span>
+            ))}
+          </h1>
+
+          <p className="home-hero-sub">
+            VAS, carrier billing, content &amp; cross-border payments across 50+ geos.
+          </p>
+
+          <div className="home-hero-meta">
+            {[
+              { k: 'VAS', v: 'Any phone, any network' },
+              { k: 'DCB', v: 'Pay with mobile balance' },
+              { k: 'D2C', v: 'Content & digital reach' },
+              { k: 'Forex', v: '24–48h corridors' },
+            ].map((m, i) => (
+              <div key={m.k} className="home-hero-meta-item" style={{ animationDelay: `${0.55 + i * 0.08}s` }}>
+                <strong>{m.k}</strong>
+                <span>{m.v}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* ── Main content ── */}
-        <div className="container home-hero-content">
-          <div className="home-hero-grid">
-
-            {/* Left */}
-            <div className="home-hero-copy">
-              <p className="home-hero-pill">
-                <span className="home-hero-pill-dot">
-                  <span className="home-hero-pill-ping" />
-                  <span className="home-hero-pill-core" />
-                </span>
-                VAS · Carrier Billing · Cross-Border Payments
-              </p>
-
-              <h1 className="home-hero-title">
-                {['Connect,','Engage'].map((w,i)=>(
-                  <span key={i} className="home-hero-word-wrap">
-                    <span className="home-hero-word-grad" style={{ animationDelay:`${0.3+i*0.1}s` }}>{w}</span>
-                  </span>
-                ))}
-                <br />
-                {['&','Grow.'].map((w,i)=>(
-                  <span key={i} className="home-hero-word-wrap">
-                    <span className="home-hero-word" style={{ animationDelay:`${0.55+i*0.1}s` }}>{w}</span>
-                  </span>
-                ))}
-              </h1>
-
-              <p className="home-hero-sub">
-                Telecom VAS platforms, Direct Carrier Billing with content and digital marketing, and cross-border payments that connect countries, currencies and stakeholders into one clear process.
-              </p>
-
-              <div className="home-hero-btns">
-                <Link to="/contact" className="btn-primary"><span>Get Free Quote</span> <span>→</span></Link>
-                <Link to="/services" className="btn-outline">Explore Services</Link>
-              </div>
-            </div>
-
-            {/* Right — orbit visual */}
-            <div className="home-hero-visual">
-              <span className="home-hero-pulse" />
-              <svg viewBox="0 0 100 100" className="home-hero-ring home-hero-ring-outer" aria-hidden="true">
-                <circle cx="50" cy="50" r="49" fill="none" stroke="currentColor" strokeWidth="0.4" strokeDasharray="2 3" />
-              </svg>
-              <svg viewBox="0 0 100 100" className="home-hero-ring home-hero-ring-inner" aria-hidden="true">
-                <circle cx="50" cy="50" r="49" fill="none" stroke="currentColor" strokeWidth="0.25" />
-                <circle cx="50" cy="1" r="1.3" fill="#a78bfa" />
-                <circle cx="1" cy="50" r="0.9" fill="#fff" />
-              </svg>
-              <div className="home-hero-orbit">
-                <span className="home-hero-orbit-spark">⚡</span>
-              </div>
-              <div className="home-hero-circle">
-                <img src="/images/slider-img.png" alt="hero" />
-                <span className="home-hero-circle-shade" />
-              </div>
-              {[
-                { label:'Telecom VAS', icon:'📡', className:'home-hero-badge b1' },
-                { label:'Carrier Billing', icon:'📱', className:'home-hero-badge b2' },
-                { label:'50+ Currencies', icon:'💱', className:'home-hero-badge b3' },
-              ].map((b,i)=>(
-                <div key={i} className={b.className}>
-                  <div className="home-hero-badge-inner">
-                    <span className="home-hero-badge-icon">
-                      <span className="home-hero-badge-ping" />
-                      {b.icon}
-                    </span>
-                    <span className="home-hero-badge-label">{b.label}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="home-hero-scroll" aria-hidden="true">
+          <span>Scroll</span>
+          <div className="home-hero-scroll-line" />
         </div>
       </section>
 
-      {/* Marquee */}
-      <div className="marquee-section">
-        <div className="marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((item, i) => (
-            <div key={i} className="marquee-item">
-              <div className="marquee-dot" />
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Stats */}
       <div className="stats-bar">
         <div className="container">
           <div className="stats-grid">
             {stats.map((s, i) => (
-              <div key={i} className="stat-item reveal" style={{ transitionDelay: `${i * 0.12}s` }}>
-                <div className="stat-number">{s.number}</div>
-                <div className="stat-label">{s.label}</div>
-              </div>
+              <StatItem key={s.label} {...s} delay={`${i * 0.08}s`} />
             ))}
           </div>
         </div>
       </div>
 
-      {/* Services */}
-      <section className="section">
+      <section className="section services-section">
+        <ParallaxDepth />
         <div className="container">
           <div className="section-heading reveal">
-            <div className="tag">What We Do</div>
-            <h2>Our <span className="gradient-text">Core Services</span></h2>
-            <p>Telecom VAS, Direct Carrier Billing and cross-border payments</p>
+            <div className="tag">What we do</div>
+            <h2>Four lines. <em>One partner.</em></h2>
+            <p>VAS, Direct Carrier Billing, D2C content & digital, and Forex — built to scale with operators and enterprises.</p>
           </div>
-          <div className="services-grid">
+          <div
+            ref={booksGridRef}
+            className={`services-grid${focusBookId ? ' is-focused' : ''}`}
+          >
             {pillars.map((s, i) => (
-              <TiltCard key={s.id} className="service-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-                <div className="service-card-inner">
-                  <div className="service-icon" style={{ background: `${s.color}18`, borderColor: `${s.color}30` }}>
-                    <img src={`/images/${s.icon}`} alt={s.title} />
-                  </div>
-                  <h3>{s.title}</h3>
-                  <p>{s.desc}</p>
-                  <Link to={`/services#${s.id}`} className="service-arrow" style={{ color: s.color, textDecoration: 'none' }}>Learn more →</Link>
-                </div>
-              </TiltCard>
+              <ServiceBookCard
+                key={s.id}
+                id={s.id}
+                icon={s.icon}
+                title={s.title}
+                tagline={s.tagline}
+                desc={s.desc}
+                color={s.color}
+                index={i}
+                focused={focusBookId === s.id}
+                open={openBookId === s.id}
+                dimmed={Boolean(focusBookId && focusBookId !== s.id)}
+                onSelect={handleBookSelect}
+                style={{ transitionDelay: `${i * 0.1}s` }}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Flip Cards */}
-      <section className="section" style={{ background: 'var(--dark2)' }}>
+      <DiscShelf />
+      <PhoneProducts />
+
+      <JourneySection />
+
+      <section className="section vas-section">
+        <ParallaxDepth />
         <div className="container">
           <div className="section-heading reveal">
-            <div className="tag">VAS Solution Families</div>
-            <h2>Reach Every Subscriber, <span className="gradient-text">On Any Phone</span></h2>
-            <p>USSD, messaging, voice, ringback tones and mobile advertising working together on one carrier-grade platform.</p>
+            <div className="tag">Telecom Solutions</div>
+            <h2>VAS Platforms</h2>
+            <p>
+              <strong style={{ color: 'var(--ink)' }}>Telecom solutions that connect, engage &amp; grow.</strong>{' '}
+              From USSD and SMS Gateway to mobile advertising — the network capabilities, value-added services and campaigns operators and enterprises need, in one place.
+            </p>
           </div>
           <FlipCards />
         </div>
       </section>
 
-      {/* Why Us */}
-      <section className="section why-us">
-        <div className="container">
-          <div className="grid-2">
-            <div className="reveal-left">
-              <div className="tag">Why Choose Us</div>
-              <h2 style={{ fontSize: 'clamp(1.8rem,3vw,2.8rem)', fontWeight: 800, color: 'var(--white)', marginBottom: 16 }}>
-                One Partner, <span className="gradient-text">Every Channel</span>
-              </h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 40, lineHeight: 1.85, fontSize: 16 }}>
-                From operators and third-party VAS providers to enterprises and financial institutions, we deliver telecom solutions, carrier billing with content and digital marketing, and cross-border payments that move value securely, with speed, clarity and fewer intermediaries.
-              </p>
-              <Link to="/about" className="btn-primary"><span>Learn More About Us</span> <span>→</span></Link>
-            </div>
-            <div className="why-grid reveal-right">
-              {whyUs.map((w, i) => (
-                <div key={i} className="why-item">
-                  <div className="why-icon">{w.icon}</div>
-                  <div>
-                    <h4>{w.title}</h4>
-                    <p>{w.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <WhyTimeline />
 
-      {/* Journey Section */}
-      <JourneySection />
-
-      {/* Forex highlight */}
-      <section className="section">
+      <section className="section forex-section">
+        <ParallaxDepth />
         <div className="container">
           <div className="section-heading reveal">
-            <div className="tag">Forex & Cross-Border Payments</div>
-            <h2>Liquidity <span className="gradient-text">Across the World</span></h2>
+            <div className="tag">Forex & cross-border</div>
+            <h2>Liquidity <em>across the world</em></h2>
             <p>{forex.layers[1].solution}</p>
           </div>
-          <div className="grid-3">
-            {forex.stats.map((s, i) => (
-              <div key={s.label} className="glass-card reveal" style={{ padding: 32, textAlign: 'center', transitionDelay: `${i * 0.1}s` }}>
-                <div style={{ fontSize: 40, fontWeight: 900, background: 'var(--gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontFamily: 'Space Grotesk', marginBottom: 6 }}>{s.value}</div>
-                <h3 style={{ color: 'var(--white)', fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{s.label}</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.7 }}>{s.desc}</p>
-              </div>
-            ))}
+          <div className="reveal">
+            <ForexChartCard />
           </div>
-          <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginTop: 40 }}>
-            {forex.corridors.map(c => (
-              <span key={c} style={{ padding: '7px 16px', borderRadius: 50, background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)', fontSize: 13, fontWeight: 600, color: '#67e8f9' }}>{c}</span>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 48 }}>
-            <Link to="/services#forex" className="btn-outline">Explore Cross-Border Payments →</Link>
+          <div className="forex-cta">
+            <Link to="/services#forex" className="btn-outline btn-magnetic">Explore cross-border payments →</Link>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
       <section className="section-sm">
         <div className="container">
           <div className="cta-section reveal">
-            <h2>Ready to <span className="gradient-text-neon">Grow</span> Your Business?</h2>
+            <div className="cta-glow" aria-hidden="true" />
+            <div className="cta-particles" aria-hidden="true">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <span key={i} style={{ '--i': i }} />
+              ))}
+            </div>
+            <h2>Ready to grow with <em>Numero</em>?</h2>
             <p>Let’s talk about launching VAS, DCB, content, digital campaigns and cross-border payments that grow with your business.</p>
             <div className="cta-btns">
-              <Link to="/contact" className="btn-primary"><span>Contact Us Now</span> <span>→</span></Link>
-              <Link to="/services" className="btn-outline">View Services</Link>
+              <Link to="/contact" className="btn-primary btn-shine btn-magnetic">
+                <span>Contact us</span>
+                <span className="btn-arrow">→</span>
+              </Link>
+              <Link to="/services" className="btn-outline btn-ghost btn-magnetic">View services</Link>
             </div>
           </div>
         </div>
       </section>
 
       <Footer />
-
-      <style>{`
-        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes morph { 0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; } }
-        @keyframes neon-pulse { 0%,100% { text-shadow: 0 0 10px rgba(0,255,240,0.8), 0 0 30px rgba(0,255,240,0.4); } 50% { text-shadow: 0 0 20px rgba(0,255,240,1), 0 0 60px rgba(0,255,240,0.6); } }
-        @keyframes gradient-x { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-        @keyframes count-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-      `}</style>
-    </>
+    </div>
   )
 }

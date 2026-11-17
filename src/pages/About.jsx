@@ -1,22 +1,16 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import ParallaxDepth from '../components/ParallaxDepth'
 import useScrollReveal from '../hooks/useScrollReveal'
 import { vasProducts } from '../data/content'
+import { partners } from '../data/partners'
 import '../styles/global.css'
 import '../styles/footer.css'
+import '../styles/partners.css'
 
 const team = [
-  { img: 'anand-khanna-profile-image-225x300.jpg', name: 'Mr. Anand Khanna', role: 'Business Head & Founder' },
-  { img: 'mamta.jpg', name: 'Mamta Parashar', role: 'Founder' },
-  { img: 'd7604cd7-5afa-49e1-b97d-8746a9a3b3d6-compressed-300x300.jpg', name: 'Mr. Roshan Singh', role: 'Digital Head' },
-]
-
-const partners = [
-  '1-copy-compressed-_1_-150x150.webp','2-copy-compressed-_1_-300x240.webp',
-  '3-copy-compressed-300x240.webp','4-copy-compressed-300x240.webp',
-  '5-copy-compressed-300x240.webp','6-copy-compressed-300x240.webp',
-  '7-copy-compressed-300x240.webp','8-copy-compressed-300x240.webp',
-  '9-copy-compressed-300x240.webp',
+  { name: 'Mamta Parashar', role: 'Founder' },
+  { name: 'Vivek Sharma', role: 'Founder' },
 ]
 
 const values = [
@@ -33,16 +27,18 @@ export default function About() {
       <Navbar />
 
       <div className="page-hero">
-        <div className="container">
-          <div className="tag">Who We Are</div>
-          <h1>About <span className="gradient-text">Numero Info</span></h1>
-          <p>Telecom VAS, Direct Carrier Billing and cross-border payments — connecting people, payments and processes</p>
+        <ParallaxDepth variant="hero" />
+        <div className="container" data-parallax="-0.06">
+          <div className="tag">Who we are</div>
+          <h1>About Numero Info</h1>
+          <p>Telecom VAS, Direct Carrier Billing and cross-border payments — connecting people, payments and processes.</p>
           <div className="page-hero-line" />
         </div>
       </div>
 
       {/* About content */}
       <section className="section">
+        <ParallaxDepth />
         <div className="container">
           <div className="grid-2">
             <div className="reveal-left">
@@ -51,7 +47,7 @@ export default function About() {
                 Connect, Engage <span className="gradient-text">& Grow</span>
               </h2>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.9, marginBottom: 16 }}>
-                Numero Info helps operators monetize VAS with USSD, SMSC, Cloud IVR, CRBT and mobile advertising — the network capabilities, value-added services and campaigns operators and enterprises need, in one place.
+                Numero Info helps operators monetize VAS with USSD, SMS Gateway, CRBT and mobile advertising — the network capabilities, value-added services and campaigns operators and enterprises need, in one place.
               </p>
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.9, marginBottom: 16 }}>
                 With Direct Carrier Billing, customers buy instantly using their phone bill or prepaid balance. We pair it with content they love — audio books, VOD, HD games, contests and more — and 360º digital marketing that drives conversions.
@@ -60,7 +56,7 @@ export default function About() {
                 Across borders, we bring stakeholders, currencies, documentation and approvals into one technology-enabled coordination layer — with deep liquidity across African markets and beyond.
               </p>
               <div style={{ display: 'flex', gap: 32 }}>
-                {[[`${vasProducts.length}`,'VAS Products'],['50+','Currencies'],['24–48 H','Turnaround']].map(([n,l]) => (
+                {[[`${vasProducts.length}`,'VAS Products'],['50+','Geos'],['24–48 H','Turnaround']].map(([n,l]) => (
                   <div key={l}>
                     <div style={{ fontSize: 28, fontWeight: 800, background: 'var(--gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{n}</div>
                     <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{l}</div>
@@ -101,19 +97,11 @@ export default function About() {
             <div className="tag">The People</div>
             <h2>Meet Our <span className="gradient-text">Experts</span></h2>
           </div>
-          <div className="grid-3">
+          <div className="grid-2" style={{ maxWidth: 720, margin: '0 auto' }}>
             {team.map((m, i) => (
-              <div key={i} className="glass-card reveal" style={{ overflow: 'hidden', transitionDelay: `${i * 0.15}s` }}>
-                <div style={{ height: 280, overflow: 'hidden' }}>
-                  <img src={`/images/${m.img}`} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
-                    onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
-                    onMouseLeave={e => e.target.style.transform = 'scale(1)'}
-                  />
-                </div>
-                <div style={{ padding: '20px 24px' }}>
-                  <h4 style={{ color: 'var(--white)', fontWeight: 700, marginBottom: 4 }}>{m.name}</h4>
-                  <p style={{ color: 'var(--primary-light)', fontSize: 13 }}>{m.role}</p>
-                </div>
+              <div key={m.name} className="glass-card reveal" style={{ padding: '28px 24px', textAlign: 'center', transitionDelay: `${i * 0.15}s` }}>
+                <h4 style={{ color: 'var(--ink)', fontWeight: 700, marginBottom: 6, fontFamily: 'var(--font-display)', fontSize: 18 }}>{m.name}</h4>
+                <p style={{ color: 'var(--accent)', fontSize: 13, fontWeight: 600 }}>{m.role}</p>
               </div>
             ))}
           </div>
@@ -138,22 +126,26 @@ export default function About() {
       </section>
 
       {/* Partners */}
-      <section className="section">
+      <section className="section partners-section">
         <div className="container">
           <div className="section-heading reveal">
             <div className="tag">Ecosystem</div>
             <h2>Our <span className="gradient-text">Partners</span></h2>
+            <p>Operators and technology partners across Africa, Middle East, Asia and the Americas.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 20 }}>
-            {partners.map((img, i) => (
-              <div key={i} className="glass-card reveal" style={{ padding: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', transitionDelay: `${i * 0.05}s` }}>
-                <img src={`/images/${img}`} alt={`partner ${i+1}`} style={{ maxWidth: 120, maxHeight: 80, objectFit: 'contain', filter: 'grayscale(1) brightness(2)', transition: 'filter 0.3s' }}
-                  onMouseEnter={e => e.target.style.filter = 'grayscale(0) brightness(1)'}
-                  onMouseLeave={e => e.target.style.filter = 'grayscale(1) brightness(2)'}
-                />
+        </div>
+        <div className="partners-channels reveal" aria-label="Partner logos">
+          {[partners.slice(0, Math.ceil(partners.length / 2)), partners.slice(Math.ceil(partners.length / 2))].map((row, rowIndex) => (
+            <div key={rowIndex} className={`partners-channel partners-channel--${rowIndex === 0 ? 'left' : 'right'}`}>
+              <div className="partners-channel-track">
+                {[...row, ...row].map((p, i) => (
+                  <div key={`${p.id}-${i}`} className="partner-card" title={p.name}>
+                    <img src={`/images/partners/${p.logo}`} alt={p.name} loading="lazy" />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 

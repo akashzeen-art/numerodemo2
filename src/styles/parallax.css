@@ -1,0 +1,148 @@
+/* ===== Site-wide parallax ===== */
+:root {
+  --scroll-y: 0;
+  --scroll-p: 0;
+}
+
+.is-parallax,
+[data-parallax] {
+  will-change: transform;
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+}
+
+/* Compose with existing hero mouse parallax */
+.home-hero-media.is-parallax,
+.home-hero-media[data-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+}
+.home-hero-media[data-parallax] img {
+  transform: scale(1.14) translate3d(calc(var(--mx) * -0.35), calc(var(--my) * -0.35), 0);
+}
+
+.home-hero-content[data-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+}
+
+.home-hero-orb[data-parallax] {
+  animation: none;
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+}
+
+.home-hero-aurora[data-parallax] {
+  animation: none;
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0) scale(1.05);
+}
+
+.home-hero-grid[data-parallax],
+.home-hero-signals[data-parallax],
+.home-hero-rings[data-parallax] {
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+}
+
+.port-hero-aurora[data-parallax] {
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+}
+
+.services-hero-media[data-parallax],
+.port-hero-media[data-parallax] {
+  transform: scale(1.12) translate3d(0, var(--parallax-y, 0px), 0);
+}
+
+.parallax-depth {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.parallax-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.parallax-blob.mint {
+  background: rgba(115, 213, 184, 0.55);
+}
+.parallax-blob.violet {
+  background: rgba(123, 108, 240, 0.4);
+}
+.parallax-blob.peach {
+  background: rgba(255, 180, 120, 0.5);
+}
+
+.parallax-blob.b1 {
+  width: min(42vw, 340px);
+  height: min(42vw, 340px);
+  top: -8%;
+  right: -6%;
+}
+.parallax-blob.b2 {
+  width: min(36vw, 280px);
+  height: min(36vw, 280px);
+  bottom: 4%;
+  left: -8%;
+}
+.parallax-blob.b3 {
+  width: min(28vw, 220px);
+  height: min(28vw, 220px);
+  top: 40%;
+  left: 45%;
+}
+
+.section,
+.port-section,
+.vas-section,
+.why-us,
+.forex-section,
+.services-section,
+.page-hero {
+  position: relative;
+}
+
+.section > .container,
+.port-section > .container,
+.page-hero > .container,
+.services-hero-content,
+.port-hero-inner,
+.home-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero .parallax-depth {
+  z-index: 0;
+}
+
+/* Soft depth shift on cards while scrolling past */
+[data-parallax-lift] {
+  transition: transform 0.2s linear;
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+}
+
+@media (max-width: 768px) {
+  /* Gentler motion on small screens — keep effect but clamp visually via lower speeds in markup */
+  .parallax-blob.b3 { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-parallax,
+  [data-parallax],
+  .home-hero-media[data-parallax],
+  .home-hero-media[data-parallax] img,
+  .home-hero-aurora[data-parallax],
+  .home-hero-content[data-parallax],
+  .home-hero-orb[data-parallax],
+  .services-hero-media[data-parallax],
+  .port-hero-media[data-parallax],
+  [data-parallax-lift] {
+    transform: none !important;
+    will-change: auto;
+  }
+  .parallax-blob {
+    display: none;
+  }
+}

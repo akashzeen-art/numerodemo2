@@ -1,0 +1,308 @@
+.vas-options {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
+  width: 100%;
+  min-height: 420px;
+  height: min(62vh, 520px);
+  gap: 0;
+}
+
+.vas-option {
+  position: relative;
+  overflow: hidden;
+  min-width: 64px;
+  margin: 8px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: #fff;
+  background-color: var(--defaultBackground, #0c7c6b);
+  background-image: var(--optionBackground);
+  background-size: auto 120%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+  border-radius: 28px;
+  flex-grow: 1;
+  max-width: 110px;
+  isolation: isolate;
+}
+
+.vas-option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 14, 28, 0.55) 0%,
+      rgba(18, 14, 28, 0.35) 35%,
+      rgba(18, 14, 28, 0.72) 70%,
+      rgba(12, 10, 20, 0.92) 100%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--defaultBackground) 48%, transparent) 0%,
+      transparent 55%
+    );
+  pointer-events: none;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.vas-option.active {
+  flex-grow: 10000;
+  max-width: 720px;
+  margin: 4px;
+  border-radius: 36px;
+  background-size: auto 100%;
+}
+
+.vas-option.active::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(14, 12, 24, 0.78) 0%,
+      rgba(14, 12, 24, 0.68) 40%,
+      rgba(14, 12, 24, 0.82) 75%,
+      rgba(10, 8, 18, 0.94) 100%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--defaultBackground) 42%, transparent) 0%,
+      transparent 60%
+    );
+}
+
+.vas-option-shadow {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 140px;
+  z-index: 1;
+  pointer-events: none;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+  box-shadow:
+    inset 0 -120px 0 -120px rgba(10, 8, 18, 0.95),
+    inset 0 -120px 0 -100px rgba(10, 8, 18, 0.9);
+}
+
+.vas-option.active .vas-option-shadow {
+  box-shadow:
+    inset 0 -160px 140px -120px rgba(10, 8, 18, 0.98),
+    inset 0 -120px 120px -100px rgba(10, 8, 18, 0.92);
+}
+
+.vas-option-label {
+  display: flex;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  right: 12px;
+  height: 44px;
+  z-index: 3;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.vas-option.active .vas-option-label {
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+}
+
+.vas-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  max-width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fffaf3;
+  color: var(--defaultBackground);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  flex-shrink: 0;
+}
+
+.vas-option-emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.vas-option-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  color: #fff;
+  min-width: 0;
+  overflow: hidden;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+}
+
+.vas-option-main,
+.vas-option-sub {
+  position: relative;
+  white-space: nowrap;
+  transition: 0.45s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity 0.35s ease;
+  left: 18px;
+  opacity: 0;
+}
+
+.vas-option.active .vas-option-main,
+.vas-option.active .vas-option-sub {
+  left: 0;
+  opacity: 1;
+}
+
+.vas-option.active .vas-option-sub {
+  transition-delay: 0.08s;
+}
+
+.vas-option-main {
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.vas-option-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+
+.vas-option-panel {
+  position: absolute;
+  inset: 18px 18px 78px;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+  overflow: auto;
+  scrollbar-width: thin;
+  color: #fff;
+}
+
+.vas-option.active .vas-option-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0.12s;
+}
+
+.vas-option-intro {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+  max-width: 46ch;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+}
+
+.vas-option-products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vas-option-products li {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(8, 6, 16, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.vas-option-products strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 750;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.vas-option-products strong span {
+  font-weight: 500;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.vas-option-products p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: rgba(255, 248, 239, 0.92);
+}
+
+@media (max-width: 900px) {
+  .vas-options {
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    gap: 10px;
+  }
+  .vas-option {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+    flex-grow: 0;
+    height: 78px;
+    margin: 0;
+    border-radius: 18px;
+    background-size: cover;
+  }
+  .vas-option.active {
+    height: auto;
+    min-height: 420px;
+    margin: 0;
+    border-radius: 22px;
+    flex-grow: 0;
+  }
+  .vas-option:not(.active) .vas-option-main,
+  .vas-option:not(.active) .vas-option-sub {
+    left: 0;
+    opacity: 1;
+  }
+  .vas-option:not(.active) .vas-option-sub {
+    display: none;
+  }
+  .vas-option:not(.active)::before {
+    background: linear-gradient(
+      90deg,
+      rgba(12, 10, 20, 0.82) 0%,
+      rgba(12, 10, 20, 0.55) 55%,
+      rgba(12, 10, 20, 0.35) 100%
+    );
+  }
+  .vas-option-panel {
+    position: relative;
+    inset: auto;
+    margin: 16px 16px 70px;
+    max-height: none;
+  }
+  .vas-option:not(.active) .vas-option-panel {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vas-option,
+  .vas-option::before,
+  .vas-option-shadow,
+  .vas-option-label,
+  .vas-option-main,
+  .vas-option-sub,
+  .vas-option-panel {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,115 @@
+.partners-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.partners-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.partners-channel {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.partners-channel-track {
+  display: flex;
+  width: max-content;
+  gap: 14px;
+  padding: 4px 0;
+}
+
+.partners-channel--left .partners-channel-track {
+  animation: partnersScrollLeft 42s linear infinite;
+}
+
+.partners-channel--right .partners-channel-track {
+  animation: partnersScrollRight 46s linear infinite;
+}
+
+.partners-channel:hover .partners-channel-track {
+  animation-play-state: paused;
+}
+
+@keyframes partnersScrollLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes partnersScrollRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.partner-card {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 168px;
+  min-height: 96px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 250, 243, 0.72);
+  border: 1px solid rgba(26, 20, 40, 0.08);
+  box-shadow: 0 10px 28px rgba(26, 20, 40, 0.04);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.partner-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(43, 184, 148, 0.35);
+  box-shadow: 0 16px 36px rgba(26, 20, 40, 0.08);
+  background: #fffaf3;
+}
+
+.partner-card img {
+  max-width: 118px;
+  max-height: 52px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.72);
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.partner-card:hover img {
+  filter: grayscale(0) opacity(1);
+  transform: scale(1.04);
+}
+
+@media (max-width: 640px) {
+  .partners-channels { gap: 10px; }
+  .partners-channel-track { gap: 10px; }
+  .partner-card {
+    width: 140px;
+    min-height: 84px;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+  .partner-card img {
+    max-width: 96px;
+    max-height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners-channel--left .partners-channel-track,
+  .partners-channel--right .partners-channel-track {
+    animation: none;
+  }
+  .partners-channel {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
