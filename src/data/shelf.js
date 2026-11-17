@@ -12,8 +12,8 @@ export const shelfItems = [
     artist: 'Offers Enablement',
     year: 'VAS',
     genre: 'Any phone · No internet',
-    // Dollar / money imagery for USSD offers & monetization
-    ...shot('photo-1554224155-6726b3ff858f'),
+    img: '/images/ussdimages.png',
+    blur: '/images/ussdimages.png',
     tracks: [
       ['01', 'Interactive menus', 'Real-time'],
       ['02', 'Mass reach', 'Any handset'],
@@ -29,8 +29,8 @@ export const shelfItems = [
     artist: 'Messaging Core',
     year: 'VAS',
     genre: 'High throughput SMS',
-    // Sending an SMS from a phone
-    ...shot('photo-1577563908411-5077b6dc7624'),
+    img: '/images/smsgateway.png',
+    blur: '/images/smsgateway.png',
     tracks: [
       ['01', 'Secure delivery', 'At scale'],
       ['02', 'OTP & alerts', 'Priority'],
